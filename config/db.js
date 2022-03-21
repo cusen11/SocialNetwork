@@ -7,7 +7,7 @@ const connectDB = async () => {
         await mongoose.connect(
             db,
             { 
-                useNewUrlParser:true, 
+                useNewUrlParser:true,  
             }
         ); 
         console.log("Conncet database success!!!")  
