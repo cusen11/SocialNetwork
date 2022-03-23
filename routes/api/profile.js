@@ -5,6 +5,7 @@ const User = require('../../models/user')
 
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middlerware/auth'); 
+const { json } = require('express/lib/response');
 
 // @router    GET api/profile/me
 // desc       Get current users profile 
@@ -213,7 +214,10 @@ router.delete("/experience/:exp_id", auth, async(req,res)=>{
         const profile = await Profile.findOne({user : req.user.id});
 
         const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.exp_id);
-
+        
+        if(removeIndex < 0 )
+            return res.status(401).json({msg:"Education not found!!!"})
+        
         profile.experience.splice(removeIndex, 1);
 
         await profile.save();
@@ -224,5 +228,82 @@ router.delete("/experience/:exp_id", auth, async(req,res)=>{
         res.status(500).send('Server error!!!')
     }
 })
+
+
+
+// @router    PUT api/profile/education
+// desc       Add profile education
+// access     Private
+
+router.put('/education', [auth, 
+    [
+        check('school','School is required').not().isEmpty(),
+        check('degree','Degree is required').not().isEmpty(),
+        check('from','Form date is required').not().isEmpty(), 
+    ]
+], async(req,res)=>{ 
+    const errors = validationResult(req);
+    if(!errors.isEmpty())
+        return res.status(400).json({ errors : errors.array() });
+
+    const {
+        school,
+        degree,
+        fieldofstudy,
+        from,
+        to, 
+        description
+    } = req.body
+
+    const newEdu = {
+        school,
+        degree,
+        fieldofstudy,
+        from,
+        to, 
+        description
+    }
+
+    try {
+        const profile = await Profile.findOne({user: req.user.id});
+
+        profile.education.unshift(newEdu)
+
+        await profile.save()
+
+        res.status(200).json({ msg: "Update education successful!!" })
+    } catch (err) {
+        console.error(err.message); 
+        res.status(500).send('Server error!!!')
+    }
+
+})
+
+
+// @router    PUT api/profile/delete
+// desc       Delete profile education
+// access     Private
+
+router.delete("/education/:edu_id", auth, async(req,res)=>{
+    try {
+        const profile = await Profile.findOne({user : req.user.id});
+
+        const removeIndex = profile.education.map(item => item.id).indexOf(req.params.edu_id); 
+         
+        if(removeIndex < 0 )
+            return res.status(401).json({msg:"Education not found!!!"})
+        
+        profile.education.splice(removeIndex, 1);
+        
+
+        await profile.save();
+
+        res.status(200).json({msg: "Deleted education!!!"})
+    } catch (err) {
+        console.error(err.message); 
+        res.status(500).send('Server error!!!')
+    }
+})
+
 
 module.exports = router;
