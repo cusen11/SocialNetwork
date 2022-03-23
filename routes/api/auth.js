@@ -4,7 +4,7 @@ const router = express.Router();
 const config = require('config'); 
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
-const { check, validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator'); 
 
 // @router    GET api/auth
 // desc       Test route
