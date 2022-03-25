@@ -4,8 +4,7 @@ const Profile = require('../../models/Profile');
 const User = require('../../models/user')
 
 const { check, validationResult } = require('express-validator');
-const auth = require('../../middlerware/auth'); 
-const { json } = require('express/lib/response');
+const auth = require('../../middlerware/auth');  
 
 // @router    GET api/profile/me
 // desc       Get current users profile 
