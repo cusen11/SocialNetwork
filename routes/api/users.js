@@ -24,10 +24,10 @@ router.get('/', auth, async(req,res) => {
     }
 })
 
-// @router    POST api/users/add
+// @router    POST api/users/registration
 // desc       Add new user
 // access     Public 
-router.post('/add',[
+router.post('/registration',[
     check('username','Username is required').not().isEmpty(),
     check('email','Email is required').isEmail(),
     check('password','Password enter is with 6 or more charaters').isLength({min: 6})
