@@ -8,6 +8,7 @@ import Navbar from './Layout/Navbar';
 import HomePage from './Pages/HomePage';
 import Profile from './Pages/Profile';
 import Login from './Component/Login';
+import Registration from './Component/Registration';
 
 
 
@@ -17,7 +18,8 @@ const App = () =>
       <Routes>
         <Route index path="/" element={<HomePage/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/profile" element={<Profile/>}/>
+        <Route path="/profile" element={<Profile/>}/> 
+        <Route path="/registration" element={<Registration/>}/>
       </Routes> 
     </BrowserRouter> 
 export default App;

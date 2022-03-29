@@ -20,7 +20,7 @@ function Login() {
     <Row justify='center' align='middle'>
         
         <Col xs={24} md={12} lg={8} >
-        <Title level={1}>Login</Title>
+        <Title level={1} align='center'>Login</Title>
             <Card>
                 <Form
                 name="basic"
@@ -31,21 +31,19 @@ function Login() {
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
-                <Form.Item
-                label="Username"
-                name="username"
+                <Form.Item 
+                name="email"
                 rules={[
                     {
                     required: true,
-                    message: 'Please input your username!',
+                    message: 'Please input your Email!',
                     },
                 ]}
                 >
-                <Input />
+                <Input placeholder="Email"/>
                 </Form.Item>
 
-                <Form.Item
-                label="Password"
+                <Form.Item 
                 name="password"
                 rules={[
                     {
@@ -54,7 +52,7 @@ function Login() {
                     },
                 ]}
                 >
-                <Input.Password />
+                <Input.Password placeholder="Password"/>
                 </Form.Item>
 
                 <Form.Item>
