@@ -10,16 +10,27 @@ import Profile from './Pages/Profile';
 import Login from './Component/Login';
 import Registration from './Component/Registration';
 
+//redux
+import { persistStore } from 'redux-persist'; 
+import { PersistGate } from 'redux-persist/integration/react'
+import { Provider } from 'react-redux';
+import store from './store';
 
+
+let persistor = persistStore(store);
 
 const App = () =>  
-    <BrowserRouter> 
-      <Navbar/> 
-      <Routes>
-        <Route index path="/" element={<HomePage/>}/>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/profile" element={<Profile/>}/> 
-        <Route path="/registration" element={<Registration/>}/>
-      </Routes> 
-    </BrowserRouter> 
+<Provider store={store}> 
+  <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter> 
+        <Navbar/> 
+        <Routes>
+          <Route index path="/" element={<HomePage/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/profile" element={<Profile/>}/> 
+          <Route path="/registration" element={<Registration/>}/>
+        </Routes> 
+      </BrowserRouter> 
+    </PersistGate>
+  </Provider>
 export default App;

@@ -1,8 +1,12 @@
 import React from 'react';
 import { Form, Input, Button,Row, Col, Typography ,Card } from 'antd';   
 import axios from 'axios';
+import { login } from '../reducers/Login';
+import { useDispatch } from 'react-redux';
 
 function Registration() {
+    const dispatch = useDispatch();
+
     const { Title } = Typography;
 
     const onFinish = async (values) => {
@@ -22,8 +26,9 @@ function Registration() {
                     "Content-Type": "application/json"
                 }
             }
-            const res = await axios.post('/api/users/registration', body, config);
-            console.log(res)
+            await axios.post('/api/users/registration', body, config).then(function(res){
+                dispatch(login(res.data))
+            }); 
         } catch (err) {
             console.error(err.response.data);
         }

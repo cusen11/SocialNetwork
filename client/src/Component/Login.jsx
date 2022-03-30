@@ -6,10 +6,30 @@ import { Form, Input,
         from 'antd';  
 import { Link } from 'react-router-dom';
 
+import { login } from '../reducers/Login'; 
+import { useDispatch } from 'react-redux';
+
+import axios from 'axios'
+
+
 function Login() {
+    const dispatch = useDispatch()
     const { Title } = Typography;
-    const onFinish = (values) => {
-        console.log('Success:', values);
+    const onFinish = async (values) => {
+        try {
+            const body = JSON.stringify(values);
+            const config = {
+                headers:{
+                    "Content-Type": "application/json"
+                }
+            }
+            await axios.post('/api/auth/login',body, config).then(function(res){
+                dispatch(login(res.data))
+                console.log(res.data)
+            })
+        } catch (err) {
+            console.error(err.response.data);
+        } 
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -20,7 +40,7 @@ function Login() {
     <Row justify='center' align='middle'>
         
         <Col xs={24} md={12} lg={8} >
-        <Title level={1} align='center'>Login</Title>
+        <Title level={1} align='center'>Sign In</Title>
             <Card>
                 <Form
                 name="basic"
