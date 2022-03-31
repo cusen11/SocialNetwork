@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit' 
+import axios from 'axios';
 
 export const loginSlice = createSlice({
   name: 'login',
@@ -13,16 +14,14 @@ export const loginSlice = createSlice({
         login: true,
         expires_at: Date.now(),
         request_token:  actions.payload.data
-      };
-      console.log('login')
+      }; 
     },
     logout: (state) => {
       state.value = {
         login: false,
         expires_at: "",
         request_token: ""
-      }
-      console.log('logout')
+      }  
     },
     
   },

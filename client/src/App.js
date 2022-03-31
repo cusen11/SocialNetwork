@@ -12,11 +12,17 @@ import Registration from './Component/Registration';
 
 //redux 
 import { useSelector } from 'react-redux';
-import LoginForm from './Component/LoginForm';   
+import LoginForm from './Component/LoginForm'; 
+import setAuthToken from './utils/auth';
 const App = () => {
   
   const token = useSelector(state => state.login); 
-  const { login } = token.value;    
+  const { login } = token.value; 
+  const xtoken = token.value.request_token.token
+  console.log(token)
+  useEffect(()=>{ 
+      setAuthToken(token)  
+  },[token])
   return(
     <BrowserRouter>  
         <Navbar/> 
