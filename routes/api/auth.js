@@ -39,7 +39,6 @@ router.post('/login',[
         if(!isMatch)
             return res.status(400).json({status: false, mgs: "Invalid Credentials!!!"})
 
-
         // return jsonwebtoken 
         const payload = {
             user:{

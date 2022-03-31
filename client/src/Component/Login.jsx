@@ -1,18 +1,11 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react'; 
 import LoginForm from './LoginForm';
 
 function Login() {
-    
-    const token = useSelector(state => state.login);  
-    console.log(token.value)
     return (
         <>
           {
-              token !== null ? <LoginForm/> : 
-              <div>
-                <h1>Đã login</h1>  
-              </div>  
+              <LoginForm/> 
           }
         </>
     );

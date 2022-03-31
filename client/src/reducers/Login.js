@@ -12,7 +12,7 @@ export const loginSlice = createSlice({
       state.value = {
         login: true,
         expires_at: Date.now(),
-        request_token:  actions.payload.data 
+        request_token:  actions.payload.data
       };
       console.log('login')
     },
