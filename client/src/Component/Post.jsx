@@ -18,6 +18,7 @@ function Post({token}) {
             } catch (err) {
                 alert(err.respond.data.msg)
             }
+            
         }
         GetAllPost();
      },[token])
