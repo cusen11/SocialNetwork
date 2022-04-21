@@ -1,13 +1,9 @@
 import React, { useEffect } from 'react'; 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import 'antd/dist/antd.css';
-import './Assets/Style/style.scss';
-
 import Navbar from './Layout/Navbar';
 import HomePage from './Pages/HomePage';
-import Profile from './Pages/Profile';
-import Login from './Component/Login';
+import Profile from './Pages/Profile'; 
 import Registration from './Component/Registration';
 
 //redux 
@@ -17,8 +13,7 @@ import setAuthToken from './utils/auth';
 const App = () => {
   
   const token = useSelector(state => state.login); 
-  const { login } = token.value; 
-  const xtoken = token.value.request_token.token
+  const { login } = token.value;  
   console.log(token)
   useEffect(()=>{ 
       setAuthToken(token)  
@@ -28,8 +23,7 @@ const App = () => {
         <Navbar/> 
         {!login ? <LoginForm/> :
         <Routes>
-          <Route index path="/" element={<HomePage/>}/>
-          <Route path="/login" element={<Login/>}/>
+          <Route index path="/" element={<HomePage/>}/> 
           <Route path="/profile" element={<Profile/>}/> 
           <Route path="/registration" element={<Registration/>}/>
         </Routes> 

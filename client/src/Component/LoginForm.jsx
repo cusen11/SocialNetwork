@@ -5,31 +5,17 @@ import { Form, Input,
         Typography ,Card }
         from 'antd';  
 import { Link } from 'react-router-dom';
-
-import { login } from '../reducers/Login'; 
+  
 import { useDispatch } from 'react-redux';
-
-import axios from 'axios'
+ 
+import { loginAuthor } from '../Action/users';
 
 
 function LoginForm() {
     const dispatch = useDispatch()
     const { Title } = Typography;
-    const onFinish = async (values) => {
-        try {
-            const body = JSON.stringify(values);
-            const config = {
-                headers:{
-                    "Content-Type": "application/json"
-                }
-            }
-            await axios.post('/api/auth/login',body, config).then(function(res){
-                dispatch(login(res)) 
-            })
-        } catch (err) {
-            console.error(err.response.data);
-            alert('Invalid Credentials!!!')
-        } 
+    const onFinish = (values) => {
+        loginAuthor( values, dispatch)
     }; 
     return (
     <Row justify='center' align='middle'>

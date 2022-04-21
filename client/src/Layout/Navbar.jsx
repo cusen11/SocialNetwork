@@ -16,7 +16,7 @@ function Navbar() {
             <Col><Link to="/"><img src={Logo} alt="logo"/></Link></Col>
             <Col>
                 <Row align='middle' justify='start' gutter={8} >
-                    <Col>{!login ? <Button type='primary'><Link to='/login'>Login</Link></Button> : ''}</Col>
+                    <Col>{!login ? <Button type='primary'><Link to='/'>Login</Link></Button> : ''}</Col>
                     <Col><Button type='primary' danger onClick={() => dispatch(logout()) }>Logout</Button></Col>
                 </Row>
             </Col>

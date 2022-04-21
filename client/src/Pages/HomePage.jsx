@@ -1,9 +1,15 @@
 import React from 'react';
+import { useSelector } from 'react-redux'; 
+import Post from '../Component/Post';
 
-function HomePage(props) {
+function HomePage() { 
+
+    const token = useSelector(state => state.login.value.request_token.token);  
     return (
         <>
-            <h1>Home Page</h1>   
+            {
+                <Post token={token}/>
+            }
         </>
     );
 }

@@ -1,5 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit' 
-import axios from 'axios';
+import { createSlice } from '@reduxjs/toolkit'  
 
 export const loginSlice = createSlice({
   name: 'login',
