@@ -14,7 +14,6 @@ const App = () => {
   
   const token = useSelector(state => state.login); 
   const { login } = token.value;  
-  console.log(token)
   useEffect(()=>{ 
       setAuthToken(token)  
   },[token])
