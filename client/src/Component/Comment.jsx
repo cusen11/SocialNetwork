@@ -17,7 +17,6 @@ function Comment({data}) {
         form.resetFields();
         setHidden(!hidden)
     };
-    console.log(hidden)
     return (
         <>
             <Button 
