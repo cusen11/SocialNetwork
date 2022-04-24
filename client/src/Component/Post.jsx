@@ -20,7 +20,7 @@ function Post() {
                     }
                 } 
                 await axios.get('/api/posts/', config).then(function(res){
-                    setPosts(res.data)   
+                    setPosts(res.data)    
                     
                 })
             } catch (err) {
@@ -39,7 +39,7 @@ function Post() {
                         <Typography>{formatDAY(post.createdAt)}</Typography>
                         <br/>
                         <Typography level={3}>{post.content}</Typography> 
-                        <LikePost data = {post.likes.length}/>
+                        <LikePost data={post.likes}/>
                         <Comment data={post.comment.length}/> 
                     </Card>
                     

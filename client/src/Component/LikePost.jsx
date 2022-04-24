@@ -1,25 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { LikeOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { Button } from 'antd'; 
+import { LikeAndUnlikePost } from '../Action/posts';
+import { useSelector } from 'react-redux';
 
 LikePost.propTypes = {
-    data:PropTypes.number.isRequired,
+    data:PropTypes.array.isRequired, 
 };
 
-function LikePost({data}) {
-    const likePost = () =>{
-        console.log('call API Like Post')
-    }
+function LikePost({data}) {  
+    const token = useSelector(state => state.login.value.request_token.token);
     return (
         <>
             <Button
             type="text" 
             icon={<LikeOutlined />} 
             size='large'
-            onClick={likePost}
+            onClick={()=>LikeAndUnlikePost(data,token)}
             >
-                    {data === 0 ? '' : ` ${data}`} 
+                    {data.length === 0 ? '' : ` ${data.length}`} 
             </Button> 
         </>
     );
