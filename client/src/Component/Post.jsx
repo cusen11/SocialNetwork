@@ -17,7 +17,7 @@ function Post() {
              setPosts(dataPost)
          }
          getPost();
-    },[token,posts])
+    },[token])
     
     return (
         <>
