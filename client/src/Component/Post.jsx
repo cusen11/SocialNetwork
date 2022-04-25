@@ -1,35 +1,24 @@
 import React, { useEffect, useState } from 'react'; 
-import axios from "axios"; 
 import { useSelector } from 'react-redux';
 import { Avatar, Card, Typography } from 'antd';
 import { formatDAY } from '../Action/func';
 import Comment from './Comment';
-import LikePost from './LikePost';
+import LikePost from './LikePost'; 
+import { GetAllPost } from '../Action/posts';
 
 function Post() {  
     const { Meta } = Card;
     const token = useSelector(state => state.login.value.request_token.token);  
     const [ posts, setPosts ] = useState()
     //Get All Post 
-     useEffect(()=>{
-        const GetAllPost = async () =>{ 
-            try {
-                const config = { 
-                    headers:{ 
-                        'x-auth-token': token
-                    }
-                } 
-                await axios.get('/api/posts/', config).then(function(res){
-                    setPosts(res.data)    
-                    
-                })
-            } catch (err) {
-                alert(err.respond.data.msg)
-            }
-            
-        }
-        GetAllPost();
-     },[token]) 
+    useEffect(()=>{
+        const getPost = async () =>{ 
+            const dataPost = await GetAllPost(token)
+             setPosts(dataPost)
+         }
+         getPost();
+    },[token,posts])
+    
     return (
         <>
             {
@@ -39,7 +28,7 @@ function Post() {
                         <Typography>{formatDAY(post.createdAt)}</Typography>
                         <br/>
                         <Typography level={3}>{post.content}</Typography> 
-                        <LikePost data={post.likes}/>
+                        <LikePost data={post}/>
                         <Comment data={post.comment.length}/> 
                     </Card>
                     

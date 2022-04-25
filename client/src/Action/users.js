@@ -19,19 +19,21 @@ export const loginAuthor = async (values ,dispatch) =>{
     } 
 } 
 
-export const GetInfoLoginUser = (token) => {
-    let dataUser = []
+export const GetInfoLoginUser = async (token) => { 
+    let dataUser;
     try {
         const config = {
             headers:{
                 'x-auth-token': token
             }
         }
-        axios.get('/api/users/',config).then(function(res){
-            console.log(res.data)
+        await axios.get('/api/users/',config).then(function(res){
+            dataUser = res.data 
         })
+       
     } catch (err) {
         console.log(err.response.data.mgs)
-    }
+    } 
     return dataUser
 }
+

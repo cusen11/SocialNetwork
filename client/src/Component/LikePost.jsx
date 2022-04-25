@@ -6,7 +6,7 @@ import { LikeAndUnlikePost } from '../Action/posts';
 import { useSelector } from 'react-redux';
 
 LikePost.propTypes = {
-    data:PropTypes.array.isRequired, 
+    data:PropTypes.object 
 };
 
 function LikePost({data}) {  
@@ -19,7 +19,7 @@ function LikePost({data}) {
             size='large'
             onClick={()=>LikeAndUnlikePost(data,token)}
             >
-                    {data.length === 0 ? '' : ` ${data.length}`} 
+                    {data.likes.length === 0 ? '' : ` ${data.likes.length}`} 
             </Button> 
         </>
     );
