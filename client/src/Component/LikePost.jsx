@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { LikeOutlined,LikeTwoTone } from '@ant-design/icons';
 import { Button } from 'antd'; 
 import { LikeAndUnlikePost } from '../Action/posts';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { GetInfoLoginUser } from '../Action/users';
 
 LikePost.propTypes = {
@@ -11,6 +11,7 @@ LikePost.propTypes = {
 };
 
 function LikePost({data}) {  
+    const dispath = useDispatch()
     const token = useSelector(state => state.login.value.request_token.token);
     const [ isLike, setIsLike ] =useState()
     useEffect(()=>{
@@ -27,7 +28,7 @@ function LikePost({data}) {
             type="text" 
             icon={!isLike ? <LikeOutlined /> : <LikeTwoTone />} 
             size='large'
-            onClick={()=>LikeAndUnlikePost(data,token)}
+            onClick={()=>LikeAndUnlikePost(data,token,dispath)}
             >
                     {data.likes.length === 0 ? '' : ` ${data.likes.length}`} 
             </Button> 

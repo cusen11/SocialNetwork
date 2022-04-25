@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from 'react'; 
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react'; 
+import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Card, Typography } from 'antd';
 import { formatDAY } from '../Action/func';
 import Comment from './Comment';
 import LikePost from './LikePost'; 
 import { GetAllPost } from '../Action/posts';
 
+
 function Post() {  
     const { Meta } = Card;
     const token = useSelector(state => state.login.value.request_token.token);  
-    const [ posts, setPosts ] = useState()
+    const posts = useSelector(state => state.posts.value)
+    const dispatch = useDispatch()
     //Get All Post 
     useEffect(()=>{
-        const getPost = async () =>{ 
-            const dataPost = await GetAllPost(token)
-             setPosts(dataPost)
-         }
-         getPost();
-    },[token])
-    
+        GetAllPost(token,dispatch) 
+    },[token,dispatch]) 
     return (
         <>
             {
@@ -32,7 +29,7 @@ function Post() {
                         <Comment data={post.comment.length}/> 
                     </Card>
                     
-                ))
+                )) 
             }
         </>
     );
