@@ -56,6 +56,24 @@ router.get('/',auth,async(req,res)=>{
 
 })
 
+// @router    POST api/posts
+// desc       Get post Pagination
+// access     Private 
+
+router.post('/page',auth, async(req,res)=>{
+
+    try {
+        const { page, limit } = req.body  
+        const pageNum = parseInt(page - 1 ) || 0
+        const total = await Post.countDocuments({})
+        const posts = await Post.find({}).limit(parseInt(limit)).skip(limit*pageNum).sort({ createdAt : -1 });
+        res.status(200).json({currentPage:page, results: posts,totalItem:total, totalPage:Math.ceil(total/limit)})
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error!!!')
+    } 
+})
+
 // @router    GET api/posts/:post_id
 // desc       Get Post ID
 // access     Private 
