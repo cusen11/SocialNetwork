@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { LikeOutlined,LikeTwoTone } from '@ant-design/icons';
 import { Button } from 'antd'; 
-import { LikeAndUnlikePost } from '../Action/posts';
+import { LikePostAPI, UnLikePostAPI } from '../Action/posts';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetInfoLoginUser } from '../Action/users';
 
@@ -12,8 +12,9 @@ LikePost.propTypes = {
 
 function LikePost({data}) {  
     const dispath = useDispatch()
-    const token = useSelector(state => state.login.value.request_token.token);
-    const [ isLike, setIsLike ] =useState()
+    const token = useSelector(state => state.login.value.request_token.token); 
+    const [ isLike, setIsLike ] = useState()
+    const [ length, setLength ] = useState(data.likes.length)
     useEffect(()=>{
         const isLikeFunc = async () =>{
             const user = await GetInfoLoginUser(token);
@@ -22,16 +23,37 @@ function LikePost({data}) {
         } 
         isLikeFunc()
     },[token,data.likes]) 
+    
     return (
         <>
-            <Button
-            type="text" 
-            icon={!isLike ? <LikeOutlined /> : <LikeTwoTone />} 
-            size='large'
-            onClick={()=>LikeAndUnlikePost(data,token,dispath)}
-            >
-                    {data.likes.length === 0 ? '' : ` ${data.likes.length}`} 
-            </Button> 
+            {
+                !isLike ?
+                <Button
+                type="text" 
+                icon={<LikeOutlined />} 
+                size='large'
+                onClick={()=>{
+                    LikePostAPI(data._id,token,dispath)
+                    setIsLike(!isLike)
+                    setLength(length + 1)
+                }}
+                >
+                        {length === 0 ? '' : ` ${length}`} 
+                </Button> 
+                :
+                <Button
+                type="text" 
+                icon={<LikeTwoTone/>} 
+                size='large'
+                onClick={()=>{
+                    UnLikePostAPI(data._id,token,dispath)
+                    setIsLike(!isLike)
+                    setLength(length - 1)
+                }}
+                >
+                        {length === 0 ? '' : ` ${length}`} 
+                </Button>
+            } 
         </>
     );
 }
