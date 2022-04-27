@@ -2,8 +2,7 @@ import axios from "axios";
 import { GetPost } from "../reducers/Posts";
 import { error, success } from "./func";
 
-export const LikePostAPI = async (id,token,dispatch) => { 
-    console.log(id)  
+export const LikePostAPI = async (id,token,dispatch) => {  
     try {
         const config = { 
             headers:{ 

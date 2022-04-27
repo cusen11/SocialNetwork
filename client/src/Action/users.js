@@ -1,5 +1,5 @@
 import axios from 'axios' 
-import { login } from '../reducers/Login';  
+import { login, userInfo } from '../reducers/Login';  
 
 
 export const loginAuthor = async (values ,dispatch) =>{  
@@ -18,7 +18,7 @@ export const loginAuthor = async (values ,dispatch) =>{
     } 
 } 
 
-export const GetInfoLoginUser = async (token) => { 
+export const GetInfoLoginUser = async (token,dispatch) => { 
     let dataUser;
     try {
         const config = {
@@ -27,12 +27,13 @@ export const GetInfoLoginUser = async (token) => {
             }
         }
         await axios.get('/api/users/',config).then(function(res){
-            dataUser = res.data 
+            dataUser = res.data
+            dispatch(userInfo(dataUser))
+            
         })
        
     } catch (err) {
         console.log(err.response.data.mgs)
-    } 
-    return dataUser
+    }  
 }
 

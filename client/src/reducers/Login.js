@@ -22,10 +22,12 @@ export const loginSlice = createSlice({
         request_token: ""
       }  
     },
-    
+    userInfo:(state, actions) =>{
+      state.info = actions.payload
+    } 
   },
 })
  
-export const { login, logout  } = loginSlice.actions
+export const { login, logout, userInfo  } = loginSlice.actions
 
 export default loginSlice.reducer

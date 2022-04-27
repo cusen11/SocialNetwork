@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { LikeOutlined,LikeTwoTone } from '@ant-design/icons';
 import { Button } from 'antd'; 
 import { LikePostAPI, UnLikePostAPI } from '../Action/posts';
-import { useDispatch, useSelector } from 'react-redux';
-import { GetInfoLoginUser } from '../Action/users';
+import { useDispatch, useSelector } from 'react-redux'; 
 
 LikePost.propTypes = {
     data:PropTypes.object 
@@ -15,14 +14,10 @@ function LikePost({data}) {
     const token = useSelector(state => state.login.value.request_token.token); 
     const [ isLike, setIsLike ] = useState()
     const [ length, setLength ] = useState(data.likes.length)
+    const user  = useSelector(state => state.login.info) 
     useEffect(()=>{
-        const isLikeFunc = async () =>{
-            const user = await GetInfoLoginUser(token);
-            const userId = user._id  
-            setIsLike(data.likes.some((like) => {return like.user === userId})) 
-        } 
-        isLikeFunc()
-    },[token,data.likes]) 
+        setIsLike(data.likes.some((like) => {return like.user === user._id})) 
+    },[token,data.likes, user._id]) 
     
     return (
         <>
