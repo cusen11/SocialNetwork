@@ -3,11 +3,9 @@ import Post from '../Component/Post';
 
 function HomePage() {  
     return (
-        <>
-            { 
-                <Post/>
-            }
-        </>
+        <div style={{margin: '30px auto', maxWidth:'800px'}}> 
+            <Post/> 
+        </div>
     );
 }
 

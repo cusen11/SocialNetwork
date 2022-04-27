@@ -18,9 +18,7 @@ router.post('/add',[auth,
     const errors = validationResult(req);
     
     if(!errors.isEmpty())
-        res.status(400).json({ errors: errors.array() }) 
-    
-
+        res.status(400).json({ errors: errors.array() })  
     try {
         const user = User.findById(req.user.id).select('-password');
     

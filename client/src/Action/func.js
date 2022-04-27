@@ -1,3 +1,5 @@
+import { message } from "antd";
+
 export const formatDAY = (date) =>{  
     let AllDay = new Date(date); 
     let minute = AllDay.getMinutes();
@@ -31,3 +33,15 @@ export const formatDAY = (date) =>{
         return dayResult;
     } 
 }
+
+export const success = (content) => {
+    message.success(content);
+  };
+  
+export  const error = (content) => {
+    message.error(content);
+  };
+  
+export  const warning = (content) => {
+    message.warning(content);
+  };

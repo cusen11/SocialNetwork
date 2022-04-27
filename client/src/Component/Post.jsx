@@ -4,8 +4,8 @@ import { Avatar, Card, Typography } from 'antd';
 import { formatDAY } from '../Action/func';
 import Comment from './Comment';
 import LikePost from './LikePost'; 
-import { GetAllPost } from '../Action/posts';
-
+import { GetAllPost } from '../Action/posts'; 
+import CreatePost from './CreatePost';
 
 function Post() {  
     const { Meta } = Card;
@@ -17,10 +17,11 @@ function Post() {
         GetAllPost(token,dispatch) 
     },[token,dispatch]) 
     return (
-        <>
+        <> 
+            <CreatePost/>
             {
                 posts?.map(post =>(
-                    <Card key={post._id} style={{ width: 800, margin:'30px auto' }}>
+                    <Card key={post._id} style={{margin: '15px 0'}}>
                         <Meta  avatar={<Avatar src={post.user.avatar}/>} title={post.user.username}/>
                         <Typography>{formatDAY(post.createdAt)}</Typography>
                         <br/>
