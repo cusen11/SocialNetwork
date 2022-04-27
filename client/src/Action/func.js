@@ -29,6 +29,9 @@ export const formatDAY = (date) =>{
     if(yearCurrent === year &&  monthCurrent === month && daysCurrent === days && hoursCurrent > hours ){
         return dayResult = `${hoursCurrent - hours} giờ trước`;
     } 
+    if(yearCurrent === year &&  monthCurrent === month && daysCurrent === days && hoursCurrent === hours && minuteCurrent === minute){
+        return dayResult = `Vừa cập nhật`;
+    }
     else{
         return dayResult;
     } 
