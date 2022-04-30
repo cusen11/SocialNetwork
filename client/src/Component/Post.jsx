@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Card, Typography } from 'antd';
 import { formatDAY } from '../Action/func';
-import Comment from './Comment';
+import CommentComponent from './Comment';
 import LikePost from './LikePost'; 
 import { GetAllPost } from '../Action/posts'; 
 import CreatePost from './CreatePost';
@@ -27,7 +27,7 @@ function Post() {
                         <br/>
                         <Typography level={3}>{post.content}</Typography> 
                         <LikePost data={post}/>
-                        <Comment data={post.comment.length}/> 
+                        <CommentComponent data={post.comment}/> 
                     </Card>
                     
                 )) 

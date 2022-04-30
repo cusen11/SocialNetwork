@@ -1,22 +1,29 @@
-import { Button, Form, Input } from 'antd';
-import React, { useRef, useState } from 'react'; 
+import { Avatar, Button, Col, Form, Input, Row, Typography,Comment } from 'antd';
+import React, { useEffect, useRef, useState } from 'react'; 
 import PropTypes from 'prop-types';
 import { CommentOutlined } from '@ant-design/icons';
+import { PaginationArray } from '../Action/posts';
  
-Comment.propTypes = {
-    data:PropTypes.number.isRequired,
+CommentComponent.propTypes = {
+    data:PropTypes.array.isRequired,
 };
 
-function Comment({data}) { 
+function CommentComponent({data}) { 
     const [ hidden, setHidden] = useState(true) 
+    const [dataComment, setDataComment] = useState([])
+    const [paginationSize, setPaginationSize] = useState(2) 
     const [form] = Form.useForm();
-
     const valueTextArea = useRef() 
     const onFinish = (values) => {
         console.log('Finish:', values); 
         form.resetFields();
         setHidden(!hidden)
     };
+    
+    useEffect(()=>{
+        setDataComment(PaginationArray(data,paginationSize,1))  
+    },[paginationSize,data])
+    
     return (
         <>
             <Button 
@@ -24,18 +31,47 @@ function Comment({data}) {
             icon={<CommentOutlined />} 
             size='large' 
             onClick = {()=> setHidden(!hidden)} >
-                    {data === 0 ? '' : `${data}`}
+                    {data.length === 0 ? '' : `${data.length}`}
             </Button > 
-            <Form hidden={hidden} form={form} name="basic" onFinish={onFinish}> 
-                    <Form.Item name="comment">
-                        <Input rows={2} ref={valueTextArea}/>
-                    </Form.Item> 
-                    <Button type='primary' size='default' htmlType="submit">Gửi</Button> 
-            </Form>
+            <Row hidden={hidden}>
+                <Col md={24} xs={24}>
+                    <Form form={form} name="basic" onFinish={onFinish}> 
+                            <Row>
+                                <Col md={20} xs={20}>
+                                    <Form.Item name="comment">
+                                        <Input rows={2} ref={valueTextArea}/>
+                                    </Form.Item> 
+                                </Col>
+                                <Col md={4} xs={4}><Button type='primary' size='default' htmlType="submit">Gửi</Button> </Col>
+                            </Row>
+                            
+                    </Form>
+                </Col>
+                <Col md={24} xs={24} > 
+                    {
+                        dataComment?.map(cmt => ( 
+                            <Comment key={cmt._id}
+                            author={cmt.username}
+                            avatar={<Avatar src={cmt.avatar} alt={cmt.username} />}
+                            content={
+                                <Typography>{cmt.text}</Typography>
+                            }
+                            />
+                        
+                        ))
+                    }
+                    <Button hidden={data.length <= dataComment.length ? true : false}
+                    type='link'
+                    onClick={()=>{
+                        setPaginationSize(paginationSize+2)
+                    }}
+                    >Xem thêm</Button>
+                </Col> 
+            </Row>
             
         </>
     );
 }
 
-export default Comment;
+export default CommentComponent;
 

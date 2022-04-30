@@ -42,7 +42,7 @@ export const GetAllPost = async(token,dispatch) =>{
             dispatch(GetPost(res)) 
         }) 
     } catch (err) {
-        alert(err.respond.data.msg)
+        console.log(err.respond.data.msg)
     } 
      
 }
@@ -64,4 +64,8 @@ export const CreatePostAPI = async(data,token,dispatch) => {
     } catch (err) {
         error(err.respond.data.msg) 
     }
+}
+
+export const  PaginationArray = (array, pageSize, PageNumber) =>{
+    return array.slice((PageNumber - 1) * pageSize, PageNumber * pageSize);
 }
