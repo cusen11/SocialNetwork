@@ -69,3 +69,21 @@ export const CreatePostAPI = async(data,token,dispatch) => {
 export const  PaginationArray = (array, pageSize, PageNumber) =>{
     return array.slice((PageNumber - 1) * pageSize, PageNumber * pageSize);
 }
+
+export const AddComment = async (token, text,id, dispatch) =>{
+    try {
+        const config = {
+            headers:{
+                'x-auth-token': token,
+                'Content-Type': 'application/json'
+            }
+        }
+        await axios.put(`/api/posts/comment/${id}`, text, config).then(()=>{
+            success('Add new comment success!!!')
+            GetAllPost(token,dispatch) 
+        }) 
+
+    } catch (err) {
+        error(err.respond.data.msg) 
+    }
+}

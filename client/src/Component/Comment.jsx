@@ -2,22 +2,23 @@ import { Avatar, Button, Col, Form, Input, Row, Typography,Comment } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'; 
 import PropTypes from 'prop-types';
 import { CommentOutlined } from '@ant-design/icons';
-import { PaginationArray } from '../Action/posts';
+import { AddComment, PaginationArray } from '../Action/posts';
+import { useDispatch } from 'react-redux';
  
 CommentComponent.propTypes = {
     data:PropTypes.array.isRequired,
 };
 
-function CommentComponent({data}) { 
+function CommentComponent({data,token,id}) { 
+    const dispatch = useDispatch()
     const [ hidden, setHidden] = useState(true) 
     const [dataComment, setDataComment] = useState([])
     const [paginationSize, setPaginationSize] = useState(2) 
     const [form] = Form.useForm();
     const valueTextArea = useRef() 
-    const onFinish = (values) => {
-        console.log('Finish:', values); 
-        form.resetFields();
-        setHidden(!hidden)
+    const onFinish = (values) => { 
+        form.resetFields();  
+        AddComment(token, values,id, dispatch)
     };
     
     useEffect(()=>{
@@ -38,7 +39,7 @@ function CommentComponent({data}) {
                     <Form form={form} name="basic" onFinish={onFinish}> 
                             <Row>
                                 <Col md={20} xs={20}>
-                                    <Form.Item name="comment">
+                                    <Form.Item name="text">
                                         <Input rows={2} ref={valueTextArea}/>
                                     </Form.Item> 
                                 </Col>

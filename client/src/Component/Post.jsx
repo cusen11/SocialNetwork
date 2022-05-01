@@ -27,7 +27,7 @@ function Post() {
                         <br/>
                         <Typography level={3}>{post.content}</Typography> 
                         <LikePost data={post}/>
-                        <CommentComponent data={post.comment}/> 
+                        <CommentComponent data={post.comment} token={token} id={post._id}/> 
                     </Card>
                     
                 )) 
