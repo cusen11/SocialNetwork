@@ -7,18 +7,17 @@ import LikePost from './LikePost';
 import { GetAllPost } from '../Action/posts'; 
 import CreatePost from './CreatePost';
 
-function Post() {  
-    const { Meta } = Card;
-    const token = useSelector(state => state.login.value.request_token.token);  
-    const posts = useSelector(state => state.posts.value)
-    const dispatch = useDispatch()
-    //Get All Post 
+function Post({dataToken}) {  
+    const { Meta } = Card; 
+    const token = dataToken.value.request_token.token  
+    const posts = useSelector(state => state?.posts.value)
+    const dispatch = useDispatch() 
     useEffect(()=>{
         GetAllPost(token,dispatch) 
     },[token,dispatch]) 
     return (
         <> 
-            <CreatePost/>
+            <CreatePost dataToken={dataToken}/>
             {
                 posts?.map(post =>(
                     <Card key={post._id} style={{margin: '15px 0'}}>
@@ -26,7 +25,7 @@ function Post() {
                         <Typography>{formatDAY(post.createdAt)}</Typography>
                         <br/>
                         <Typography level={3}>{post.content}</Typography> 
-                        <LikePost data={post}/>
+                        <LikePost data={post} token={token}/>
                         <CommentComponent data={post.comment} token={token} id={post._id}/> 
                     </Card>
                     

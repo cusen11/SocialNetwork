@@ -6,11 +6,9 @@ import { logout } from '../reducers/Login';
 import { useDispatch, useSelector } from 'react-redux';
 import { PoweroffOutlined } from '@ant-design/icons';
 
-function Navbar() {
+function Navbar({login}) { 
     const dispatch = useDispatch();
-    const user = useSelector(state => state.login.info)
-    const token = useSelector(state => state.login);
-    const { login } = token.value; 
+    const user = useSelector(state => state?.login.info)
     return (
         <Row className='header-page' align='middle' justify='space-between'>
             <Col><Link to="/"><img src={Logo} alt="logo"/></Link></Col>

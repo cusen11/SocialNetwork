@@ -3,8 +3,10 @@ import TextArea from 'antd/lib/input/TextArea';
 import React from 'react'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { CreatePostAPI } from '../Action/posts';
-function CreatePost() { 
-    const token = useSelector(state => state.login.value.request_token.token);  
+
+function CreatePost({dataToken}) {  
+    const token = dataToken.value.request_token.token  
+    
     const user = useSelector(state => state.login.info)
     const dispatch = useDispatch()
     const [form] = Form.useForm();
@@ -19,7 +21,7 @@ function CreatePost() {
                     <Row justify='end' wrap='wrap' gutter={[0, 8]}>
                         <Col md={24} xs={24}>
                             <Form.Item name="content" style={{margin: '0'}}>
-                                <TextArea autoSize={{ minRows: 2, maxRows: 6 }} placeholder={`Chào ${user.username} Bạn đang nghĩ gì?`}/>
+                                <TextArea autoSize={{ minRows: 2, maxRows: 6 }} placeholder={`Chào ${user?.username} Bạn đang nghĩ gì?`}/>
                             </Form.Item> 
                         </Col>
                         <Col>

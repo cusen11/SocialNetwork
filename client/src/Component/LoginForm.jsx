@@ -15,7 +15,7 @@ function LoginForm() {
     const dispatch = useDispatch()
     const { Title } = Typography;
     const onFinish = (values) => {
-        loginAuthor( values, dispatch)
+        loginAuthor( values, dispatch) 
     }; 
     return (
     <Row justify='center' align='middle'>

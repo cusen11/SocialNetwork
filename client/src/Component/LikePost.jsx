@@ -9,12 +9,11 @@ LikePost.propTypes = {
     data:PropTypes.object 
 };
 
-function LikePost({data}) {  
-    const dispath = useDispatch()
-    const token = useSelector(state => state.login.value.request_token.token); 
+function LikePost({data,token}) {   
+    const dispath = useDispatch()  
     const [ isLike, setIsLike ] = useState()
     const [ length, setLength ] = useState(data.likes.length)
-    const user  = useSelector(state => state.login.info) 
+    const user  = useSelector(state => state?.login.info)  
     useEffect(()=>{
         setIsLike(data.likes.some((like) => {return like.user === user._id})) 
     },[token,data.likes, user._id]) 

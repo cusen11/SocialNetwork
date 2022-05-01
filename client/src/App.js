@@ -8,24 +8,24 @@ import Registration from './Component/Registration';
 
 //redux 
 import { useSelector } from 'react-redux';
-import LoginForm from './Component/LoginForm'; 
+import LoginForm from './Component/LoginForm';  
 import setAuthToken from './utils/auth';
-const App = () => {
-  
-  const token = useSelector(state => state.login); 
-  const { login } = token.value;  
+const App = () => { 
+  const token = useSelector(state => state?.login);  
   useEffect(()=>{ 
-      setAuthToken(token)  
-  },[token])
+    setAuthToken(token)  
+},[token])
   return(
     <BrowserRouter>  
-        <Navbar/> 
-        {!login ? <LoginForm/> :
-        <Routes>
-          <Route index path="/" element={<HomePage/>}/> 
-          <Route path="/profile" element={<Profile/>}/> 
-          <Route path="/registration" element={<Registration/>}/>
-        </Routes> 
+        <Navbar login={token.value.login}/> 
+        {!token.value.login ? 
+          <LoginForm/> 
+          :
+          <Routes>
+            <Route index path="/" element={<HomePage dataToken={token}/>}/> 
+            <Route path="/profile" element={<Profile/>}/> 
+            <Route path="/registration" element={<Registration/>}/>
+          </Routes> 
         }
          
     </BrowserRouter> 

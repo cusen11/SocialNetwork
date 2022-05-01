@@ -9,7 +9,7 @@ export const loginAuthor = async (values ,dispatch) =>{
             headers:{
                 "Content-Type": "application/json"
             }
-        } 
+        }  
         await axios.post('/api/auth/login',body, config).then(function(res){
             dispatch(login(res)) 
         })

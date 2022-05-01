@@ -2,8 +2,9 @@ import axios from "axios";
 import { GetPost } from "../reducers/Posts";
 import { error, success } from "./func";
 
-export const LikePostAPI = async (id,token,dispatch) => {  
+export const LikePostAPI = async (id,token,dispatch) => {   
     try {
+       
         const config = { 
             headers:{ 
                 'x-auth-token': token
