@@ -8,14 +8,14 @@ import { Link } from 'react-router-dom';
   
 import { useDispatch } from 'react-redux';
  
-import { loginAuthor } from '../Action/users';
+import { loginAuthor } from '../Action/users'; 
 
 
 function LoginForm() {
     const dispatch = useDispatch()
     const { Title } = Typography;
     const onFinish = (values) => {
-        loginAuthor( values, dispatch) 
+        loginAuthor( values, dispatch)  
     }; 
     return (
     <Row justify='center' align='middle'>

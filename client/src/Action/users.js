@@ -12,6 +12,7 @@ export const loginAuthor = async (values ,dispatch) =>{
         }  
         await axios.post('/api/auth/login',body, config).then(function(res){
             dispatch(login(res)) 
+            GetInfoLoginUser(res.data.token,dispatch)  
         })
     } catch (err) { 
         alert(err.response.data.mgs)

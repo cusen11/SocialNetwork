@@ -11,24 +11,24 @@ import { useSelector } from 'react-redux';
 import LoginForm from './Component/LoginForm';  
 import setAuthToken from './utils/auth';
 const App = () => { 
-  const token = useSelector(state => state?.login);  
-  useEffect(()=>{ 
-    setAuthToken(token)  
-},[token])
+  const token = useSelector(state => state.login)  
+  useEffect(()=>{    
+      setAuthToken(token.value) 
+  },[token])   
   return(
     <BrowserRouter>  
-        <Navbar login={token.value.login}/> 
-        {!token.value.login ? 
+        <Navbar data={token}/>
+        {!token.value.status ? 
           <LoginForm/> 
           :
           <Routes>
             <Route index path="/" element={<HomePage dataToken={token}/>}/> 
             <Route path="/profile" element={<Profile/>}/> 
             <Route path="/registration" element={<Registration/>}/>
-          </Routes> 
+          </Routes>  
         }
-         
-    </BrowserRouter> 
+    </BrowserRouter>   
+   
     )
 }  
 export default App;
