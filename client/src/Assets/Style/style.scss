@@ -12,3 +12,24 @@
     width: 500px;
     padding: 10px 0;
 }
+.comment-box{ 
+    transition: all 0.3s;
+    border-radius: 10px;
+    padding: 0 10px;
+}
+.comment-box:hover { 
+    background-color: rgb(238, 237, 237); 
+}
+.comment-box:hover .closeCmt{
+    opacity: 1;
+   
+}
+.comment-box .closeCmt{
+    cursor: pointer;
+    transition: all 0.3s;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-50%,0);
+}

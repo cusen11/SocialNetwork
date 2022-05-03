@@ -88,3 +88,19 @@ export const AddComment = async (token, text,id, dispatch) =>{
         error(err.respond.data.msg) 
     }
 }
+export const removeComment = async(token,postId,id,dispatch) =>{ 
+        try {
+            const config = {
+                headers: {
+                    'x-auth-token': token
+                }
+            }
+            if (window.confirm('Bạn có chắc chắn xóa comment này?'))
+                await axios.delete(`/api/posts/comment/${postId}/${id}`,config).then((res)=>{
+                    success('Xóa thành công!!!')
+                    GetAllPost(token,dispatch) 
+                }) 
+        } catch (err) { 
+            error("Bạn không có quyền xóa comment này!!!")
+        } 
+}

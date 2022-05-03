@@ -209,7 +209,7 @@ router.put('/comment/:post_id', [auth,
 
 } )
 
-// @router    DELETE api/posts/comment/:id/:comment_id
+// @router    DELETE api/posts/comment/:post_id/:comment_id
 // desc       Delete Comment ID
 // access     Private 
 
@@ -223,7 +223,7 @@ router.delete('/comment/:post_id/:comment_id',auth , async(req,res)=>{
         
         
         if(post.user.toString() !== req.user.id)
-            return res.status(401).json({msg: " User not authorized "});
+            return res.status(401).json({msg: "Bạn không có quyền xóa comment này!!!"});
  
         
         const removeIndex = post.comment.map(item => item.id).indexOf(req.params.comment_id);
@@ -235,7 +235,7 @@ router.delete('/comment/:post_id/:comment_id',auth , async(req,res)=>{
 
         await post.save(); 
 
-        res.status(200).json({ msg: "Post Removed", post})
+        res.status(200).json({ msg: "Comment Removed", post})
 
     } catch (err) {
         console.error(err.message);

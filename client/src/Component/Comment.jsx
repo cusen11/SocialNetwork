@@ -1,8 +1,8 @@
 import { Avatar, Button, Col, Form, Input, Row, Typography,Comment } from 'antd';
 import React, { useEffect, useRef, useState } from 'react'; 
 import PropTypes from 'prop-types';
-import { CommentOutlined } from '@ant-design/icons';
-import { AddComment, PaginationArray } from '../Action/posts';
+import { CloseOutlined, CommentOutlined } from '@ant-design/icons';
+import { AddComment, PaginationArray, removeComment } from '../Action/posts';
 import { useDispatch } from 'react-redux';
  
 CommentComponent.propTypes = {
@@ -52,10 +52,12 @@ function CommentComponent({data,token,id}) {
                     {
                         dataComment?.map(cmt => ( 
                             <Comment key={cmt._id}
+                            className='comment-box'
                             author={cmt.username}
                             avatar={<Avatar src={cmt.avatar} alt={cmt.username} />}
                             content={
-                                <Typography>{cmt.text}</Typography>
+                                <Typography>{cmt.text}<CloseOutlined className='closeCmt' onClick={()=>removeComment(token,id,cmt._id, dispatch)} /></Typography>
+                                
                             }
                             />
                         
