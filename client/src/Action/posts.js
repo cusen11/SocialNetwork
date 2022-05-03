@@ -84,8 +84,8 @@ export const AddComment = async (token, text,id, dispatch) =>{
             GetAllPost(token,dispatch) 
         }) 
 
-    } catch (err) {
-        error(err.respond.data.msg) 
+    } catch (err) { 
+        error(err.response.data.msg)
     }
 }
 export const removeComment = async(token,postId,id,dispatch) =>{ 
@@ -100,7 +100,7 @@ export const removeComment = async(token,postId,id,dispatch) =>{
                     success('Xóa thành công!!!')
                     GetAllPost(token,dispatch) 
                 }) 
-        } catch (err) { 
-            error("Bạn không có quyền xóa comment này!!!")
+        } catch (err) {  
+            error(err.response.data.msg)
         } 
 }
