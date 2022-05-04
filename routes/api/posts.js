@@ -95,12 +95,11 @@ router.get('/:post_id',auth,async(req,res)=>{
 
 router.get('/dashboard/user/posts',auth,async(req,res)=>{ 
     try { 
-        const posts = await Post.find({ user: req.user.id }).populate('user',['username','avatar']);  
-        return res.json(posts)
-        if(!postUser)
+        const posts = await Post.find({ user: req.user.id }).populate('user',['username','avatar']).sort({ createdAt : -1 });   
+        if(!posts)
             return res.status(404).json({msg: "Post not found!!!"});
         
-        res.json(postUser);
+        res.json(posts);
     } catch (err) {
         console.error(err.message);
         if(err.kind === 'ObjectId')
