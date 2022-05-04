@@ -69,7 +69,7 @@ router.post('/page',auth, async(req,res)=>{
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server error!!!')
-    } 
+    }  
 })
 
 // @router    GET api/posts/:post_id
@@ -84,6 +84,23 @@ router.get('/:post_id',auth,async(req,res)=>{
             return res.status(404).json({msg: "Post not found!!!"});
         
         res.json(post);
+    } catch (err) {
+        console.error(err.message);
+        if(err.kind === 'ObjectId')
+            return res.status(404).json({msg: "Post not found!!!"});
+        res.status(500).send('Server error!!!')
+    }
+
+})
+
+router.get('/client/postuser/user',auth,async(req,res)=>{ 
+    try { 
+        const posts = await Post.find({});  
+        const postUser = posts.find(e => e.user === req.user.id);
+        if(!postUser)
+            return res.status(404).json({msg: "Post not found!!!"});
+        
+        res.json(postUser);
     } catch (err) {
         console.error(err.message);
         if(err.kind === 'ObjectId')
