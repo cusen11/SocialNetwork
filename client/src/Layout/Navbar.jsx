@@ -1,37 +1,53 @@
-import { Avatar, Button, Col, Row, Tooltip, Typography } from 'antd';
+import { Avatar, Button, Col, Popover, Row, Tooltip, Typography } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../Assets/Images/SEN-LOGO.png';
 import { logout } from '../reducers/Login';
 import { useDispatch } from 'react-redux';
-import { PoweroffOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, PoweroffOutlined } from '@ant-design/icons';
 
 function Navbar({data}) { 
     const dispatch = useDispatch();  
+    const content =(
+       <> 
+        <Tooltip title="Logout">
+            <Button  
+                type='primary' 
+                danger onClick={() => dispatch(logout())} 
+                icon={<PoweroffOutlined />}
+            />
+        </Tooltip>
+        </> 
+    )
     return (
-        <Row className='header-page' align='middle' justify='space-between'>
-            <Col><Link to="/"><img src={Logo} alt="logo"/></Link></Col>
-            <Col>
-                <Row align='middle' justify='start' gutter={8} >
-                    <Col>{!data.value.status ? <Button type='primary'><Link to='/'>Login</Link></Button> : ''}</Col>
-                    
+        <Row className='header-page'>
+            <Col className='wrapper' md={24} xs={24}>
+                <Row align='middle' justify='space-between'>
+                    <Col><Link to="/"><img src={Logo} className='avata' alt="logo"/></Link></Col>
                     <Col>
-                        {
-                            data.value.status ? 
-                            <Row justify='end' align='middle'>
-                                <Avatar size={40} src={data.info.avatar}/>
-                                <Typography.Title level={5} style={{margin: '0 16px'}}> Hi {data.info.username}</Typography.Title>
-                                <Tooltip title="Logout">
-                                    <Button  
-                                        type='primary' 
-                                        danger onClick={() => dispatch(logout())} 
-                                        icon={<PoweroffOutlined />}
-                                    />
-                                </Tooltip>
-                            </Row>
-                            :
-                            ''
-                        }
+                        <Row align='middle' justify='center'>
+                            <Col>{!data.value.status ? <Button type='primary'><Link to='/'>Login</Link></Button> : ''}</Col>
+                            
+                            <Col>
+                                {
+                                    data.value.status ? 
+                                   
+                                        <Row justify='center' align='middle' className='avatar' gutter={5}>  
+                                                <Col>
+                                                    <Link to='/dashboard'><Avatar  size={35} src={data.info.avatar}/></Link>
+                                                </Col>
+                                                <Col>
+                                                    <Popover content={content} title={`Chào ${data.info.username} !!!`} placement="topRight" arrowPointAtCenter trigger="click">
+                                                        <CaretDownOutlined style={{fontSize: '20px'}} />
+                                                    </Popover> 
+                                                </Col> 
+                                        </Row>
+                                   
+                                    :
+                                    ''
+                                }
+                            </Col>
+                        </Row>
                     </Col>
                 </Row>
             </Col>

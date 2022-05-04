@@ -10,6 +10,7 @@ import Registration from './Component/Registration';
 import { useSelector } from 'react-redux';
 import LoginForm from './Component/LoginForm';  
 import setAuthToken from './utils/auth';
+import Dashboard from './Pages/Dashboard';
 const App = () => { 
   const token = useSelector(state => state.login)  
   useEffect(()=>{    
@@ -24,7 +25,9 @@ const App = () => {
           <Routes>
             <Route index path="/" element={<HomePage dataToken={token}/>}/> 
             <Route path="/profile" element={<Profile/>}/> 
-            <Route path="/registration" element={<Registration/>}/>
+            <Route path="/registration" element={<Registration/>}/> 
+            <Route path="/dashboard" element={<Dashboard/>}/>
+
           </Routes>  
         }
     </BrowserRouter>   
