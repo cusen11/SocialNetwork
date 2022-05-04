@@ -21,7 +21,7 @@ export const formatDAY = (date) =>{
         return dayResult = `${yearCurrent - year} năm trước`;
     }
     if(yearCurrent === year &&  monthCurrent > month){
-        return dayResult = AllDay.getDay() + '/' + AllDay.getMonth(); 
+        return dayResult = 'Ngày '+ AllDay.getDay() + '/' + AllDay.getMonth(); 
     }
     if(yearCurrent === year &&  monthCurrent === month && daysCurrent > days ){
         return dayResult = `${daysCurrent - days} ngày trước`;
@@ -39,12 +39,12 @@ export const formatDAY = (date) =>{
 
 export const success = (content) => {
     message.success(content);
-  };
+};
   
 export  const error = (content) => {
     message.error(content);
-  };
+};
   
 export  const warning = (content) => {
     message.warning(content);
-  };
+};

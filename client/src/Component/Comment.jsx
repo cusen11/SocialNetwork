@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { CloseOutlined, CommentOutlined } from '@ant-design/icons';
 import { AddComment, PaginationArray, removeComment } from '../Action/posts';
 import { useDispatch } from 'react-redux';
+import { formatDAY } from '../Action/func';
  
 CommentComponent.propTypes = {
     data:PropTypes.array.isRequired,
@@ -53,10 +54,16 @@ function CommentComponent({data,token,id,dashboard}) {
                         dataComment?.map(cmt => ( 
                             <Comment key={cmt._id}
                             className='comment-box'
-                            author={cmt.username}
-                            avatar={<Avatar src={cmt.avatar} alt={cmt.username} />}
+                            author={`${cmt.username} | ${formatDAY(cmt.date)}`}
+                            avatar={<Avatar src={cmt.avatar} alt={cmt.username}/>}
                             content={
-                                <Typography>{cmt.text}<CloseOutlined className='closeCmt' onClick={()=>removeComment(token,id,cmt._id, dispatch,dashboard)} /></Typography>
+                                <Typography>
+                                    {cmt.text}
+                                    <CloseOutlined 
+                                        className='closeCmt' 
+                                        onClick={()=>removeComment(token,id,cmt._id, dispatch,dashboard)} 
+                                    />
+                                </Typography>
                                 
                             }
                             />
