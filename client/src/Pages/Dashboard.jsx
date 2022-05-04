@@ -25,7 +25,7 @@ function Dashboard({dataToken}) {
                             <br/>
                             <Typography level={3}>{post.content}</Typography> 
                             <LikePost data={post} token={token}/>
-                            <CommentComponent data={post.comment} token={token} id={post._id}/> 
+                            <CommentComponent data={post.comment} token={token} id={post._id} dashboard={true}/> 
                         </Card>
                         
                     )) 

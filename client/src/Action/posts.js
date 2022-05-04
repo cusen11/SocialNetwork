@@ -102,7 +102,7 @@ export const  PaginationArray = (array, pageSize, PageNumber) =>{
     return array.slice((PageNumber - 1) * pageSize, PageNumber * pageSize);
 }
 
-export const AddComment = async (token, text,id, dispatch) =>{
+export const AddComment = async (token, text,id, dispatch,dashboard) =>{
     try {
         const config = {
             headers:{
@@ -111,15 +111,19 @@ export const AddComment = async (token, text,id, dispatch) =>{
             }
         }
         await axios.put(`/api/posts/comment/${id}`, text, config).then(()=>{
-            success('Add new comment success!!!')
-            GetAllPost(token,dispatch) 
+            if(dashboard){ 
+                GetPostByUserId(token,dispatch) 
+            }
+            else{ 
+                GetAllPost(token,dispatch) 
+            }
         }) 
 
     } catch (err) { 
         error(err.response.data.msg)
     }
 }
-export const removeComment = async(token,postId,id,dispatch) =>{ 
+export const removeComment = async(token,postId,id,dispatch,dashboard) =>{ 
         try {
             const config = {
                 headers: {
@@ -128,10 +132,16 @@ export const removeComment = async(token,postId,id,dispatch) =>{
             }
             if (window.confirm('Bạn có chắc chắn xóa comment này?'))
                 await axios.delete(`/api/posts/comment/${postId}/${id}`,config).then((res)=>{
-                    success('Xóa thành công!!!')
-                    GetAllPost(token,dispatch) 
+                    if(dashboard){
+                        success('Xóa thành công!!!')
+                        GetPostByUserId(token,dispatch) 
+                    }
+                    else{
+                        success('Xóa thành công!!!')
+                        GetAllPost(token,dispatch) 
+                    }
                 }) 
         } catch (err) {  
             error(err.response.data.msg)
         } 
-}
+} 
