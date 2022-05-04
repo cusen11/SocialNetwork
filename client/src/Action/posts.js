@@ -48,6 +48,21 @@ export const GetAllPost = async(token,dispatch) =>{
      
 }
 
+export const GetPostById = async(token,id) =>{   
+    try {
+        const config = { 
+            headers:{ 
+                'x-auth-token': token
+            }
+        }  
+        const res = await axios.get(`/api/posts/${id}`, config)
+        return res.data
+    } catch (err) {
+        console.log(err.respond.data.msg)
+    } 
+     
+}
+
 export const CreatePostAPI = async(data,token,dispatch) => {
     try {
         const body = JSON.stringify(data)

@@ -26,7 +26,7 @@ const App = () => {
             <Route index path="/" element={<HomePage dataToken={token}/>}/> 
             <Route path="/profile" element={<Profile/>}/> 
             <Route path="/registration" element={<Registration/>}/> 
-            <Route path="/dashboard" element={<Dashboard/>}/>
+            <Route path="/dashboard" element={<Dashboard dataToken={token}/>}/>
 
           </Routes>  
         }
