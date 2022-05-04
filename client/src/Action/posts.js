@@ -1,5 +1,5 @@
 import axios from "axios"; 
-import { GetPost } from "../reducers/Posts";
+import { GetPost,GetPostByUser } from "../reducers/Posts";
 import { error, success } from "./func";
 
 export const LikePostAPI = async (id,token,dispatch) => {   
@@ -57,6 +57,22 @@ export const GetPostById = async(token,id) =>{
         }  
         const res = await axios.get(`/api/posts/${id}`, config)
         return res.data
+    } catch (err) {
+        console.log(err.respond.data.msg)
+    } 
+     
+}
+
+export const GetPostByUserId = async(token,dispatch) =>{   
+    try {
+        const config = { 
+            headers:{ 
+                'x-auth-token': token
+            }
+        } 
+        await axios.get('/api/posts/dashboard/user/posts', config).then(function(res){
+            dispatch(GetPostByUser(res)) 
+        }) 
     } catch (err) {
         console.log(err.respond.data.msg)
     } 

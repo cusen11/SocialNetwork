@@ -1,3 +1,4 @@
+import { Col, Row } from 'antd';
 import React, { useEffect } from 'react'; 
 import { useDispatch } from 'react-redux';
 import { GetInfoLoginUser } from '../Action/users';
@@ -11,9 +12,9 @@ function HomePage({dataToken}) {
    },[token,dispatch])
 
     return (
-        <div style={{margin: '30px auto', maxWidth:'800px'}}> 
-            <Post dataToken={dataToken}/> 
-        </div> 
+        <Row className="wrapperInner">
+            <Col><Post dataToken={dataToken}/> </Col>
+        </Row> 
     );
 }
 

@@ -93,10 +93,10 @@ router.get('/:post_id',auth,async(req,res)=>{
 
 })
 
-router.get('/client/postuser/user',auth,async(req,res)=>{ 
+router.get('/dashboard/user/posts',auth,async(req,res)=>{ 
     try { 
-        const posts = await Post.find({});  
-        const postUser = posts.find(e => e.user === req.user.id);
+        const posts = await Post.find({ user: req.user.id }).populate('user',['username','avatar']);  
+        return res.json(posts)
         if(!postUser)
             return res.status(404).json({msg: "Post not found!!!"});
         

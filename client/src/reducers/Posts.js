@@ -6,9 +6,12 @@ export const PostSlice = createSlice({
     reducers:{
         GetPost: (state, actions) =>{
             state.value = actions.payload.data;  
+        },
+        GetPostByUser: (state, actions) =>{ 
+            state.users = actions.payload.data; 
         }
     }
 })
 
-export const { GetPost } = PostSlice.actions;
+export const { GetPost,GetPostByUser } = PostSlice.actions;
 export default PostSlice.reducer

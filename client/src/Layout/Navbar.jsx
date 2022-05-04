@@ -1,4 +1,4 @@
-import { Avatar, Button, Col, Popover, Row, Tooltip, Typography } from 'antd';
+import { Avatar, Button, Col, Popover, Row, Tooltip } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../Assets/Images/SEN-LOGO.png';
