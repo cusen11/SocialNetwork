@@ -145,3 +145,7 @@ export const removeComment = async(token,postId,id,dispatch,dashboard) =>{
             error(err.response.data.msg)
         } 
 } 
+
+export const GetAllPostPagination = () =>{
+    
+}
