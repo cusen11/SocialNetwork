@@ -10,12 +10,12 @@ import Registration from './Component/Registration';
 import { useSelector } from 'react-redux';
 import LoginForm from './Component/LoginForm';  
 import setAuthToken from './utils/auth';
-import Dashboard from './Pages/Dashboard';
+import Dashboard from './Pages/Dashboard'; 
 const App = () => { 
   const token = useSelector(state => state.login)  
   useEffect(()=>{    
       setAuthToken(token.value) 
-  },[token])   
+  },[token])    
   return(
     <BrowserRouter>  
         <Navbar data={token}/>

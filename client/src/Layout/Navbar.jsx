@@ -10,13 +10,19 @@ function Navbar({data}) {
     const dispatch = useDispatch();  
     const content =(
        <> 
-        <Tooltip title="Logout">
-            <Button  
-                type='primary' 
-                danger onClick={() => dispatch(logout())} 
-                icon={<PoweroffOutlined />}
-            />
-        </Tooltip>
+        <Row gutter={[16, 16]}>
+            <Col xs={24} md={24}><Link to='/profile'>Cài đặt</Link></Col>
+            <Col xs={24} md={24}>
+                <Tooltip title="Logout"> 
+                    <Button style={{width: '100%'}} 
+                        type='primary' 
+                        danger onClick={() => dispatch(logout())} 
+                        icon={<PoweroffOutlined />}
+                    />
+                </Tooltip>
+            </Col>
+        </Row>
+        
         </> 
     )
     return (
@@ -38,7 +44,7 @@ function Navbar({data}) {
                                                 </Col>
                                                 <Col>
                                                     <Popover content={content} title={`Chào ${data.info.username} !!!`} placement="topRight" arrowPointAtCenter trigger="click">
-                                                        <CaretDownOutlined style={{fontSize: '20px'}} />
+                                                        <CaretDownOutlined style={{fontSize: '18px'}} />
                                                     </Popover> 
                                                 </Col> 
                                         </Row>
