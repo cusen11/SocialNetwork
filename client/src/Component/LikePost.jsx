@@ -9,7 +9,7 @@ LikePost.propTypes = {
     data:PropTypes.object 
 };
 
-function LikePost({data,token}) {   
+function LikePost({data,token,limit}) {   
     const dispath = useDispatch()  
     const [ isLike, setIsLike ] = useState()
     const [ length, setLength ] = useState(data.likes.length)
@@ -27,7 +27,7 @@ function LikePost({data,token}) {
                 icon={<LikeOutlined />} 
                 size='large'
                 onClick={()=>{
-                    LikePostAPI(data._id,token,dispath)
+                    LikePostAPI(data._id,token,dispath, limit)
                     setIsLike(!isLike)
                     setLength(length + 1)
                 }}
@@ -40,7 +40,7 @@ function LikePost({data,token}) {
                 icon={<LikeTwoTone/>} 
                 size='large'
                 onClick={()=>{
-                    UnLikePostAPI(data._id,token,dispath)
+                    UnLikePostAPI(data._id,token,dispath, limit)
                     setIsLike(!isLike)
                     setLength(length - 1)
                 }}

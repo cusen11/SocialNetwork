@@ -6,8 +6,7 @@ import CommentComponent from './Comment';
 import LikePost from './LikePost'; 
 import { GetAllPostPagination } from '../Action/posts'; 
 import CreatePost from './CreatePost';
-import {  SyncOutlined } from '@ant-design/icons';
-import { GetPost } from '../reducers/Posts';
+import {  SyncOutlined } from '@ant-design/icons'; 
 
 function Post({dataToken}) {    
     const dispatch = useDispatch() 
@@ -18,14 +17,15 @@ function Post({dataToken}) {
 
     const token = dataToken.value.request_token.token; 
     const posts = useSelector(state => state?.posts.value)
+    const initData = async()=>{
+        GetAllPostPagination(token,dispatch, 1,limit)   
+   }
+   
     useEffect(()=>{  
-       const initData = async()=>{
-            const newPosts = await GetAllPostPagination(token, 1,limit)   
-            dispatch(GetPost(newPosts)) 
-       }
-       initData()
+        initData()
     },[])
     useEffect(()=>{ 
+        
         const loadmoreIcon = document.querySelector('.loadmore'); 
         if(loadmoreIcon) 
             window.addEventListener('scroll',async ()=> {
@@ -42,8 +42,7 @@ function Post({dataToken}) {
     const loadMoreFunc = async() =>{ 
             if(posts.currentPage !== posts.totalPage){ 
                 setLimit(limit + 5)
-                const newPosts = await GetAllPostPagination(token, 1,limit)   
-                dispatch(GetPost(newPosts)) 
+                GetAllPostPagination(token,dispatch, 1,limit)
             } 
     }
     useEffect(()=>{ 
@@ -62,8 +61,8 @@ function Post({dataToken}) {
                         <Typography>{formatDAY(post.createdAt)}</Typography>
                         <br/>
                         <Typography level={3}>{post.content}</Typography> 
-                        <LikePost data={post} token={token}/>
-                        <CommentComponent data={post.comment} token={token} id={post._id} dashboard={false}/> 
+                        <LikePost data={post} token={token} limit={limit}/>
+                        <CommentComponent data={post.comment} token={token} limit={limit} id={post._id} dashboard={false}/> 
                     </Card>
                     
                 )) 

@@ -10,7 +10,7 @@ CommentComponent.propTypes = {
     data:PropTypes.array.isRequired,
 };
 
-function CommentComponent({data,token,id,dashboard}) { 
+function CommentComponent({data,token,id,dashboard,limit}) { 
     const dispatch = useDispatch()
     const [ hidden, setHidden] = useState(true) 
     const [dataComment, setDataComment] = useState([])
@@ -19,7 +19,7 @@ function CommentComponent({data,token,id,dashboard}) {
     const valueTextArea = useRef() 
     const onFinish = (values) => { 
         form.resetFields();  
-        AddComment(token, values,id, dispatch,dashboard)
+        AddComment(token, values,id, dispatch,dashboard,limit)
     };
     
     useEffect(()=>{
@@ -61,7 +61,7 @@ function CommentComponent({data,token,id,dashboard}) {
                                     {cmt.text}
                                     <CloseOutlined 
                                         className='closeCmt' 
-                                        onClick={()=>removeComment(token,id,cmt._id, dispatch,dashboard)} 
+                                        onClick={()=>removeComment(token,id,cmt._id, dispatch,dashboard,limit)} 
                                     />
                                 </Typography>
                                 

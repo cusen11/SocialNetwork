@@ -2,7 +2,7 @@ import axios from "axios";
 import { GetPost,GetPostByUser } from "../reducers/Posts";
 import { error, success } from "./func";
 
-export const LikePostAPI = async (id,token,dispatch) => {   
+export const LikePostAPI = async (id,token,dispatch,limit) => {   
     try {
        
         const config = { 
@@ -11,14 +11,14 @@ export const LikePostAPI = async (id,token,dispatch) => {
             } 
         } 
         axios.put(`/api/posts/like/${id}`,config).then(()=>{
-            GetAllPost(token, dispatch)
+            GetAllPostPagination(token, dispatch,1,limit)
         });  
         
     } catch (err) {
         console.log(err.respond.data.msg)
     }
 } 
-export const UnLikePostAPI = async (id,token,dispatch) => {   
+export const UnLikePostAPI = async (id,token,dispatch,limit) => {   
     try {
         const config = { 
             headers:{ 
@@ -26,7 +26,7 @@ export const UnLikePostAPI = async (id,token,dispatch) => {
             } 
         }
         axios.put(`/api/posts/unlike/${id}`,config).then(()=>{
-            GetAllPost(token, dispatch)
+            GetAllPostPagination(token, dispatch,1,limit)
         });   
     } catch (err) {
         console.log(err.respond.data.msg)
@@ -102,7 +102,7 @@ export const  PaginationArray = (array, pageSize, PageNumber) =>{
     return array.slice((PageNumber - 1) * pageSize, PageNumber * pageSize);
 }
 
-export const AddComment = async (token, text,id, dispatch,dashboard) =>{
+export const AddComment = async (token, text,id, dispatch,dashboard,limit) =>{
     try {
         const config = {
             headers:{
@@ -115,7 +115,7 @@ export const AddComment = async (token, text,id, dispatch,dashboard) =>{
                 GetPostByUserId(token,dispatch) 
             }
             else{ 
-                GetAllPost(token,dispatch) 
+                GetAllPostPagination(token, dispatch,1,limit)
             }
         }) 
 
@@ -123,7 +123,7 @@ export const AddComment = async (token, text,id, dispatch,dashboard) =>{
         error(err.response.data.msg)
     }
 }
-export const removeComment = async(token,postId,id,dispatch,dashboard) =>{ 
+export const removeComment = async(token,postId,id,dispatch,dashboard,limit) =>{ 
         try {
             const config = {
                 headers: {
@@ -138,7 +138,7 @@ export const removeComment = async(token,postId,id,dispatch,dashboard) =>{
                     }
                     else{
                         success('Xóa thành công!!!')
-                        GetAllPost(token,dispatch) 
+                        GetAllPostPagination(token, dispatch,1,limit)
                     }
                 }) 
         } catch (err) {  
@@ -146,7 +146,7 @@ export const removeComment = async(token,postId,id,dispatch,dashboard) =>{
         } 
 } 
 
-export const GetAllPostPagination = async (token,page,limit) =>{
+export const GetAllPostPagination = async (token,dispatch ,page,limit) =>{
     try {
         const config = {
             headers:{
@@ -160,7 +160,8 @@ export const GetAllPostPagination = async (token,page,limit) =>{
             limit 
         }
         const res = await axios.post('/api/posts/page',body,config);
-        return res.data
+        console.log(res.data)
+        dispatch(GetPost(res.data)) 
     } catch (err) {
         error(err.response.data.msg)
     }
