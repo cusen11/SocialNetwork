@@ -159,8 +159,7 @@ export const GetAllPostPagination = async (token,dispatch ,page,limit) =>{
             page,
             limit 
         }
-        const res = await axios.post('/api/posts/page',body,config);
-        console.log(res.data)
+        const res = await axios.post('/api/posts/page',body,config); 
         dispatch(GetPost(res.data)) 
     } catch (err) {
         error(err.response.data.msg)
