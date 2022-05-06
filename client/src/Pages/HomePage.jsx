@@ -13,7 +13,7 @@ function HomePage({dataToken}) {
 
     return (
         <Row className="wrapperInner">
-            <Col><Post dataToken={dataToken}/> </Col>
+            <Col md={24} xs={24}><Post dataToken={dataToken}/> </Col>
         </Row> 
     );
 }

@@ -5,7 +5,7 @@ export const PostSlice = createSlice({
     initialState:{},
     reducers:{
         GetPost: (state, actions) =>{
-            state.value = actions.payload.data;  
+            state.value = actions.payload;   
         },
         GetPostByUser: (state, actions) =>{ 
             state.users = actions.payload.data; 

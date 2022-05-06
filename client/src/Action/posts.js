@@ -70,7 +70,7 @@ export const GetPostByUserId = async(token,dispatch) =>{
                 'x-auth-token': token
             }
         } 
-        await axios.get('/api/posts/dashboard/user/posts', config).then(function(res){
+        await axios.get('/api/posts/dashboard/user/posts', config).then(function(res){ 
             dispatch(GetPostByUser(res)) 
         }) 
     } catch (err) {
@@ -146,6 +146,22 @@ export const removeComment = async(token,postId,id,dispatch,dashboard) =>{
         } 
 } 
 
-export const GetAllPostPagination = () =>{
-    
+export const GetAllPostPagination = async (token,page,limit) =>{
+    try {
+        const config = {
+            headers:{
+                'x-auth-token': token,
+                'Content-Type': 'application/json'
+            },
+           
+        },
+        body = { 
+            page,
+            limit 
+        }
+        const res = await axios.post('/api/posts/page',body,config);
+        return res.data
+    } catch (err) {
+        error(err.response.data.msg)
+    }
 }

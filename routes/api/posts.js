@@ -64,7 +64,7 @@ router.post('/page',auth, async(req,res)=>{
         const { page, limit } = req.body  
         const pageNum = parseInt(page - 1 ) || 0
         const total = await Post.countDocuments({})
-        const posts = await Post.find({}).limit(parseInt(limit)).skip(limit*pageNum).sort({ createdAt : -1 });
+        const posts = await Post.find({}).populate('user',['username','avatar']).limit(parseInt(limit)).skip(limit*pageNum).sort({ createdAt : -1 });
         res.status(200).json({currentPage:page, results: posts,totalItem:total, totalPage:Math.ceil(total/limit)})
     } catch (err) {
         console.error(err.message);
