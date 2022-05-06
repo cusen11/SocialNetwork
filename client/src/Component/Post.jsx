@@ -18,7 +18,13 @@ function Post({dataToken}) {
 
     const token = dataToken.value.request_token.token; 
     const posts = useSelector(state => state?.posts.value)
-     
+    useEffect(()=>{  
+       const initData = async()=>{
+            const newPosts = await GetAllPostPagination(token, 1,limit)   
+            dispatch(GetPost(newPosts)) 
+       }
+       initData()
+    },[])
     useEffect(()=>{ 
         const loadmoreIcon = document.querySelector('.loadmore'); 
         if(loadmoreIcon) 
