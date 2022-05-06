@@ -2,7 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const PostSlice = createSlice({
     name:'Posts',
-    initialState:{},
+    initialState:{
+        users:{},
+        value:{
+            currentPage: 1,
+            totalItem: 1,
+            results:[],
+            totalPage:1
+        }
+    },
     reducers:{
         GetPost: (state, actions) =>{
             state.value = actions.payload;   

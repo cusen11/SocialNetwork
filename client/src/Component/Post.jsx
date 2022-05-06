@@ -17,9 +17,10 @@ function Post({dataToken}) {
 
     const token = dataToken.value.request_token.token; 
     const posts = useSelector(state => state?.posts.value)
-    const initData = async()=>{
+    console.log(posts)
+    const initData = ()=>{
         GetAllPostPagination(token,dispatch, 1,limit)   
-   }
+    }
    
     useEffect(()=>{  
         initData()
@@ -39,7 +40,7 @@ function Post({dataToken}) {
                 }
         })  
     },[load])
-    const loadMoreFunc = async() =>{ 
+    const loadMoreFunc = () =>{ 
             if(posts.currentPage !== posts.totalPage){ 
                 setLimit(limit + 5)
                 GetAllPostPagination(token,dispatch, 1,limit)
