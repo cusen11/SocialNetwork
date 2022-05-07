@@ -8,7 +8,7 @@ export const PostSlice = createSlice({
             currentPage: 1,
             totalItem: 1,
             results:[],
-            totalPage:1
+            totalPage:10000
         }
     },
     reducers:{
