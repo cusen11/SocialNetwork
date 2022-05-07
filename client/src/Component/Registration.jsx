@@ -31,10 +31,7 @@ function Registration() {
             }); 
         } catch (err) {
             console.error(err.response.data);
-        }
-            
-        
-        
+        } 
     };
 
     const onFinishFailed = (errorInfo) => {
