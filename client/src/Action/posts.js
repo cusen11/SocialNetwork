@@ -79,7 +79,7 @@ export const GetPostByUserId = async(token,dispatch) =>{
      
 }
 
-export const CreatePostAPI = async(data,token,dispatch) => {
+export const CreatePostAPI = async(data,token,dispatch,limit) => {
     try {
         const body = JSON.stringify(data)
         const config = {
@@ -90,7 +90,7 @@ export const CreatePostAPI = async(data,token,dispatch) => {
         } 
         await axios.post('/api/posts/add', body, config).then(()=>{
             success('Create post Success!!!')
-            GetAllPost(token,dispatch)
+            GetAllPostPagination(token, dispatch,1,limit)
             
         }) 
     } catch (err) {

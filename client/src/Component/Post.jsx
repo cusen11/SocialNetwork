@@ -54,7 +54,7 @@ function Post({dataToken}) {
     
     return (
         <> 
-            <CreatePost dataToken={dataToken}/>
+            <CreatePost dataToken={dataToken} limit={limit}/>
             {
                 posts.results?.map(post =>(
                     <Card key={post._id} style={{margin: '15px 0'}}>

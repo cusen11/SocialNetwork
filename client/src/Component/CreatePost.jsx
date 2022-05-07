@@ -4,14 +4,14 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CreatePostAPI } from '../Action/posts';
 
-function CreatePost({dataToken}) {  
+function CreatePost({dataToken,limit}) {  
     const token = dataToken.value.request_token.token  
     
     const user = useSelector(state => state.login.info)
     const dispatch = useDispatch()
     const [form] = Form.useForm();
     const onFinish = (values) => {
-        CreatePostAPI(values,token,dispatch) 
+        CreatePostAPI(values,token,dispatch,limit) 
         form.resetFields();   
 
     };
