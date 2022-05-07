@@ -12,24 +12,20 @@ import LoginForm from './Component/LoginForm';
 import setAuthToken from './utils/auth';
 import Dashboard from './Pages/Dashboard'; 
 const App = () => { 
-  const token = useSelector(state => state.login)  
+  const token = useSelector(state => state?.login)   
   useEffect(()=>{    
       setAuthToken(token.value) 
-  },[token])    
+  },[token]) 
+  console.log(!token.value.status)  
   return(
     <BrowserRouter>  
-        <Navbar data={token}/>
-        {!token.value.status ? 
-          <LoginForm/> 
-          :
-          <Routes>
-            <Route index path="/" element={<HomePage dataToken={token}/>}/> 
-            <Route path="/profile" element={<Profile/>}/> 
-            <Route path="/registration" element={<Registration/>}/> 
-            <Route path="/dashboard" element={<Dashboard dataToken={token}/>}/>
-
+        <Navbar data={token}/> 
+          <Routes> 
+            <Route path="/" element={!token.value.status ? <LoginForm/> : <HomePage dataToken={token}/> }/>  
+            <Route path="/registration" element={<Registration/>}/>   
+            <Route path="/profile" element={<Profile/>}/>  
+            <Route path="/dashboard" element={<Dashboard dataToken={token}/>}/>  
           </Routes>  
-        }
     </BrowserRouter>   
    
     )

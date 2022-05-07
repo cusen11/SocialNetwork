@@ -24,6 +24,7 @@ export const loginSlice = createSlice({
         expires_at: Date.now(),
         request_token:  actions.payload.data
       };  
+      
     },
     logout: (state) => {
       state.value = {

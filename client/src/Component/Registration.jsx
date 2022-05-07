@@ -3,15 +3,17 @@ import { Form, Input, Button,Row, Col, Typography ,Card } from 'antd';
 import axios from 'axios';
 import { login } from '../reducers/Login';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { error } from '../Action/func';
 
 function Registration() {
     const dispatch = useDispatch();
-
+    const navigate = useNavigate()
     const { Title } = Typography;
 
     const onFinish = async (values) => {
         if(values.password !== values.password2){
-            console.log('Passowords do not match!!!');
+            error('Mật khẩu không gióng nhau!!!')
             return
         }
         const newUser = {
@@ -27,17 +29,13 @@ function Registration() {
                 }
             }
             await axios.post('/api/users/registration', body, config).then(function(res){
-                dispatch(login(res.data))
+                dispatch(login(res)) 
+                navigate('/')
             }); 
         } catch (err) {
             console.error(err.response.data);
         } 
-    };
-
-    const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-    };
-
+    }; 
     return (
     <Row justify='center' align='middle'>
         
@@ -49,8 +47,7 @@ function Registration() {
                     initialValues={{
                     remember: true,
                     }}
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
+                    onFinish={onFinish} 
                     autoComplete="off"
                 >
                     <Form.Item 
