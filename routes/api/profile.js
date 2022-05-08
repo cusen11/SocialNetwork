@@ -16,7 +16,22 @@ router.get('/me',auth, async (req,res) => {
         const profile = await Profile.findOne({user: req.user.id}).populate('user',['username','avatar']);
 
         if(!profile)
-            return res.status(400).json({mgs:'There is no profile for this user !!!'});
+            return res.json(
+                {
+                    social: null,
+                    _id: null,
+                    user: null,
+                    company: null,
+                    website: null,
+                    location: null,
+                    status: null,
+                    skills: null,
+                    bio: null,
+                    githubusername: null,
+                    experience: null,
+                    education: null 
+                }
+            );
         
         res.json(profile);
 
@@ -125,13 +140,13 @@ router.get('/user/:user_id', async(req,res)=>{
         const profile = await Profile.findOne({user: req.params.user_id}).populate('user',['username','avatar']);
 
         if(!profile)
-            return res.status(400).json({mgs:'Profile not found!!!'})
+            return res.status(400).json({msg:'Profile not found!!!'})
 
         res.status(200).json(profile)
     } catch (err) {
         console.error(err.message); 
         if(err.kind == 'ObjectId')
-            return res.status(400).json({mgs:'Profile not found!!!'})
+            return res.status(400).json({msg:'Profile not found!!!'})
         res.status(500).send('Server error!!!')
     }
 })
@@ -146,7 +161,7 @@ router.delete('/',auth, async(req,res)=>{
         await Profile.findOneAndRemove({user: req.user.id})
         await User.findOneAndRemove({_id: req.user.id}) 
  
-        res.status(200).json({mgs:'User Delete!!!'})
+        res.status(200).json({msg:'User Delete!!!'})
     } catch (err) {
         console.error(err.message); 
         res.status(500).send('Server error!!!')

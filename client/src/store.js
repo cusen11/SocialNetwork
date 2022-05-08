@@ -1,5 +1,6 @@
 import loginReducer from './reducers/Login';
 import PostReducer from './reducers/Posts';
+import ProfileReducer from './reducers/Profile';
 import { configureStore } from '@reduxjs/toolkit' ;
 import { persistReducer } from 'redux-persist';
 import {combineReducers} from "redux"; 
@@ -8,7 +9,8 @@ import thunk from 'redux-thunk';
 
 const reducers = combineReducers({ 
   login: loginReducer,
-  posts: PostReducer 
+  posts: PostReducer ,
+  profile: ProfileReducer
  });
 const persistConfig = {
   key: 'root',

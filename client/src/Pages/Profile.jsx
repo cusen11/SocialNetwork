@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { GetProfile } from '../Action/profiles';
+import { useDispatch } from 'react-redux';
 
-function Profile(props) {
+function Profile({dataToken}) { 
+    const dispatch = useDispatch();  
+    useEffect(()=>{
+        GetProfile(dataToken,dispatch) 
+    },[dataToken,dispatch])
     return (
         <>
             <h1>Profile</h1>
