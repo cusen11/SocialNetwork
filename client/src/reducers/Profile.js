@@ -20,8 +20,7 @@ export const ProfileSlice = createSlice({
     },
     reducers:{
         ProfileStore: (state, actions) =>{
-            state.value = actions.payload; 
-            console.log(state.value)
+            state.value = actions.payload;  
         }
         
     }

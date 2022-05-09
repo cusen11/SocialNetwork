@@ -23,7 +23,7 @@ const App = () => {
             <Route path="/" element={!token.value.status ? <LoginForm/> : <HomePage dataToken={token}/> }/>  
             <Route path="/registration" element={<Registration/>}/>   
             <Route path="/profile" element={!token.value.status ? <LoginForm/> :  <Profile dataToken={token.value.request_token.token}/>}/>  
-            <Route path="/dashboard" element={<Dashboard dataToken={token}/>}/>  
+            <Route path="/dashboard" element={!token.value.status ? <LoginForm/> : <Dashboard dataToken={token}/>}/>  
           </Routes>  
     </BrowserRouter>   
    

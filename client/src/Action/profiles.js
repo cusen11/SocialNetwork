@@ -1,6 +1,6 @@
 import axios from "axios";  
 import { ProfileStore } from "../reducers/Profile";
-import { error, success } from "./func";
+// import { error, success } from "./func";
 
 
 export const GetProfile = async (token,dispatch) =>{
@@ -16,4 +16,8 @@ export const GetProfile = async (token,dispatch) =>{
     } catch (err) {
         console.log(err)
     }
+}
+
+export const UpdateProfile = (token,values, dispatch) => {
+    console.log({token,values})
 }
