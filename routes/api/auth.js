@@ -31,13 +31,13 @@ router.post('/login',[
 
         let user = await User.findOne({ email });
         if(!user){
-            return res.status(400).json({status: false, mgs: "Invalid Credentials!!!"})
+            return res.status(400).json({status: false, msg: "Invalid Credentials!!!"})
         } 
        
         const isMatch = await bcrypt.compare(password, user.password);
 
         if(!isMatch)
-            return res.status(400).json({status: false, mgs: "Invalid Credentials!!!"})
+            return res.status(400).json({status: false, msg: "Invalid Credentials!!!"})
 
         // return jsonwebtoken 
         const payload = {

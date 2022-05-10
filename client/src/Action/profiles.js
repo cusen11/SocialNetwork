@@ -18,6 +18,17 @@ export const GetProfile = async (token,dispatch) =>{
     }
 }
 
-export const UpdateProfile = (token,values, dispatch) => {
-    console.log({token,values})
+export const UpdateProfile = async (token,values, dispatch) => {
+    try {
+        const config = {
+            headers:{
+                'x-auth-token': token,
+                'Content-Type':'application/json'
+            }
+        }
+        const res = await axios.post('/api/profile',values,config)
+        dispatch(ProfileStore(res.data))
+    } catch (err) {
+        console.log(err)
+    }
 }

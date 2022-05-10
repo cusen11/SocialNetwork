@@ -33,7 +33,8 @@ function Registration() {
                 navigate('/')
             }); 
         } catch (err) {
-            console.error(err.response.data);
+            error(err.response.data.mgs);
+
         } 
     }; 
     return (
@@ -99,7 +100,7 @@ function Registration() {
                     </Form.Item> 
                     <Form.Item >
                     <Button type="primary" htmlType="submit">
-                        Submit
+                        Đăng ký
                     </Button>
                     </Form.Item>
                 </Form>

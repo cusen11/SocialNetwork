@@ -25,11 +25,11 @@ router.get('/me',auth, async (req,res) => {
                     website: null,
                     location: null,
                     status: null,
-                    skills: null,
+                    skills: [],
                     bio: null,
                     githubusername: null,
-                    experience: null,
-                    education: null 
+                    experience: [],
+                    education: [] 
                 }
             );
         
