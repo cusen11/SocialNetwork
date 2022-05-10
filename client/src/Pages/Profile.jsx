@@ -26,8 +26,40 @@ function Profile({dataToken}) {
             {
                 profile.user !== null ? 
                 <Row className='wrapperInner'>
-                    <h1> Có PROFILE</h1>
-                    {profile.company}
+                    <h1>{profile.company}</h1>
+                    {profile.skills.length > 0 ? 
+                       <ul>
+                           {
+                               profile.skills.map((skill,index) =>(
+                                <p key={index} >{skill}</p>
+                            ))
+                           }
+                        </ul>
+                        :
+                        <Button>Add new Skill</Button>
+                    }
+                    {profile.experience.length > 0 ? 
+                       <ul>
+                           {
+                               profile.experience.map((e,index) =>(
+                                <p key={index} >{e.title}</p>
+                            ))
+                           }
+                        </ul>
+                        :
+                        <Button>Add new experience</Button>
+                    }
+                    {profile.education.length > 0 ? 
+                       <ul>
+                           {
+                               profile.education.map((e,index) =>(
+                                <p key={index} >{e.title}</p>
+                            ))
+                           }
+                        </ul>
+                        :
+                        <Button>Add new education</Button>
+                    }
                 </Row>
                 :
                 <Row className='wrapperInner'>
