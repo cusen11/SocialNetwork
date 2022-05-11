@@ -40,7 +40,7 @@ function Navbar({data}) {
                                    
                                         <Row justify='center' align='middle' className='avatar' gutter={5}>  
                                                 <Col>
-                                                    <Link to='/dashboard'><Avatar  size={35} src={data.info.avatar}/></Link>
+                                                    <Link to='/profile'><Avatar  size={35} src={data.info.avatar}/></Link>
                                                 </Col>
                                                 <Col>
                                                     <Popover content={content} title={`Chào ${data.info.username} !!!`} placement="topRight" arrowPointAtCenter trigger="hover">
