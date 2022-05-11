@@ -37,6 +37,11 @@ export const formatDAY = (date) =>{
     } 
 }
 
+export const formatDDMMYY = (date) =>{
+    let AllDay = new Date(date);   
+    return AllDay.getDay() + '/' + AllDay.getMonth()+1 + '/' + AllDay.getFullYear();
+}
+
 export const success = (content) => {
     message.success(content);
 };

@@ -7,11 +7,12 @@ import Experience from '../Component/Experience';
 import Education from '../Component/Education';
 import Skills from '../Component/Skills';
 import ImageView from '../Component/ImageView';
+import Dashboard from './Dashboard';
 
 function Profile({dataToken}) { 
     const profile = useSelector(state => state.profile.value)
     const userInfo = useSelector(state => state.login.info)
-
+    const login = useSelector(state => state.login)
     const { Title } = Typography
     
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -48,8 +49,7 @@ function Profile({dataToken}) {
                     </Row>
                     <Tabs tabPosition='top' style={{width:'100%'}}>
                         <Tabs.TabPane tab="Bài viết" key="1">
-
-                            
+                            <Dashboard dataToken={login}/>
                         </Tabs.TabPane>
                         <Tabs.TabPane tab="Kinh nghiệm" key="2">
                             <Experience data={profile.experience}/>
