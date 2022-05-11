@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, Modal, Row } from 'antd';
+import { Button, Col, Form, Input, Modal, Row, Tabs, Typography } from 'antd';
 import { GetProfile, UpdateProfile } from '../Action/profiles';
 import { useDispatch, useSelector } from 'react-redux';
-import TextArea from 'antd/lib/input/TextArea';
+import TextArea from 'antd/lib/input/TextArea'; 
+import Experience from '../Component/Experience';
+import Education from '../Component/Education';
+import Skills from '../Component/Skills';
+import ImageView from '../Component/ImageView';
 
 function Profile({dataToken}) { 
     const profile = useSelector(state => state.profile.value)
     const userInfo = useSelector(state => state.login.info)
+
+    const { Title } = Typography
     
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [form] = Form.useForm();
@@ -25,41 +31,33 @@ function Profile({dataToken}) {
         <>
             {
                 profile.user !== null ? 
-                <Row className='wrapperInner'>
-                    <h1>{profile.company}</h1>
-                    {profile.skills.length > 0 ? 
-                       <ul>
-                           {
-                               profile.skills.map((skill,index) =>(
-                                <p key={index} >{skill}</p>
-                            ))
-                           }
-                        </ul>
-                        :
-                        <Button>Add new Skill</Button>
-                    }
-                    {profile.experience.length > 0 ? 
-                       <ul>
-                           {
-                               profile.experience.map((e,index) =>(
-                                <p key={index} >{e.title}</p>
-                            ))
-                           }
-                        </ul>
-                        :
-                        <Button>Add new experience</Button>
-                    }
-                    {profile.education.length > 0 ? 
-                       <ul>
-                           {
-                               profile.education.map((e,index) =>(
-                                <p key={index} >{e.title}</p>
-                            ))
-                           }
-                        </ul>
-                        :
-                        <Button>Add new education</Button>
-                    }
+                <Row className='wrapperInner'> 
+                    <Row gutter={15}>
+                        <Col>
+                            <ImageView img={profile.user.avatar}/>
+                        </Col>
+                        <Col>
+                            <Title level={2}>{profile.user.username}</Title>
+                            <Typography >{profile.bio}</Typography>
+                            <Typography><strong>Công ty: </strong>{profile.company}</Typography>
+                            <Typography><strong>Vị trí: </strong>{profile.status}</Typography>
+                            <Typography><strong>Địa chỉ: </strong>{profile.location}</Typography>
+                            <Typography><strong>Website: </strong>{profile.website}</Typography>
+                            <Skills data={profile.skills}/>
+                        </Col>
+                    </Row>
+                    <Tabs tabPosition='top' style={{width:'100%'}}>
+                        <Tabs.TabPane tab="Bài viết" key="1">
+
+                            
+                        </Tabs.TabPane>
+                        <Tabs.TabPane tab="Kinh nghiệm" key="2">
+                            <Experience data={profile.experience}/>
+                        </Tabs.TabPane>
+                        <Tabs.TabPane tab="Học vấn" key="3">
+                            <Education data={profile.education} />
+                        </Tabs.TabPane>
+                    </Tabs> 
                 </Row>
                 :
                 <Row className='wrapperInner'>
