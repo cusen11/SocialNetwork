@@ -1,9 +1,10 @@
+import { CloseOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, Modal, Typography } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { formatDDMMYY } from '../Action/func';
-import { addEdudation } from '../Action/profiles';
+import { addEducation, deleteEducation } from '../Action/profiles';
 
 function Education({data}) {
     const { Title } = Typography
@@ -12,18 +13,27 @@ function Education({data}) {
     const [isModalVisible, setIsModalVisible] = useState(false); 
     const token = useSelector(state => state.login.value.request_token.token) 
     const onFinish = (values) =>{ 
-        addEdudation(token,values,dispatch)
+        addEducation(token,values,dispatch)
         setIsModalVisible(false);
         form.resetFields();
-    }
+    }  
     return (
         <>
             {
-                data.map((e,index) =>(
-                <Card
-                key={index}
-                title={<Title level={4}>{e.school}</Title>}
-                > 
+                data.map((e) =>(
+                <Card 
+                    key={e._id}
+                    className='box'
+                    title={
+                    <>
+                        <Title level={4}>{e.school}</Title>
+                        <CloseOutlined 
+                            className='closeCmt' 
+                            onClick={()=>deleteEducation(token,e._id,dispatch)} 
+                        />
+                    </>
+                    }> 
+                    
                     <Typography><strong>Giới thiệu : </strong>{e.description}</Typography>
                     <Typography><strong>Bằng cấp / Chứng chỉ: </strong>{e.degree}</Typography>
                     <Typography><strong>Nghiệp vụ: </strong>{e.fieldofstudy}</Typography>

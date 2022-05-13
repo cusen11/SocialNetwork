@@ -53,7 +53,7 @@ function CommentComponent({data,token,id,dashboard,limit}) {
                     {
                         dataComment?.map(cmt => ( 
                             <Comment key={cmt._id}
-                            className='comment-box'
+                            className='box'
                             author={`${cmt.username} | ${formatDAY(cmt.date)}`}
                             avatar={<Avatar src={cmt.avatar} alt={cmt.username}/>}
                             content={

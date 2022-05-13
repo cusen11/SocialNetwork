@@ -1,10 +1,11 @@
 
+import { CloseOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, Modal, Typography,Checkbox } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import React, { useState } from 'react'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { formatDDMMYY } from '../Action/func';
-import { addExperience } from '../Action/profiles';
+import { addExperience, deleteExperience } from '../Action/profiles';
 
 function Experience({data}) { 
     const { Title } = Typography
@@ -23,16 +24,23 @@ function Experience({data}) {
         <>
            {
                 data.map((e,index) =>(
-                <><Card 
-                key={index}
-                title={<Title level={4}>{e.title}</Title>}
-                >
+                <Card 
+                    key={e._id}
+                    className='box'
+                    title={
+                    <>
+                        <Title level={4}>{e.school}</Title>
+                        <CloseOutlined 
+                            className='closeCmt' 
+                            onClick={()=>deleteExperience(token,e._id,dispatch)} 
+                        />
+                    </>
+                    }> 
                     <Title level={5}>{e.company}</Title>
                     <Typography><strong>Nghiệp vụ: </strong>{e.description}</Typography>
                     <Typography><strong>Địa chỉ: </strong>{e.location}</Typography>
                     <Typography><strong>Thời gian: </strong>{formatDDMMYY(e.from)} - {e.current ? 'Bây giờ' : formatDDMMYY(e.to)}</Typography> 
-                </Card>
-                <br/></>
+                </Card> 
                 ))
             }
            <Modal 

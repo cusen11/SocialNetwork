@@ -47,7 +47,7 @@ export const addExperience = async (token, values, dispatch) =>{
         console.log(err)
     }
 }
-export const addEdudation = async (token, values, dispatch) =>{
+export const addEducation = async (token, values, dispatch) =>{
     try { 
         const config = {
             headers:{
@@ -57,6 +57,37 @@ export const addEdudation = async (token, values, dispatch) =>{
         }
         const res = await axios.put('/api/profile/education',values,config)
         dispatch(ProfileStore(res.data)) 
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const deleteEducation = async(token,id,dispatch) =>{ 
+    try { 
+        const config = {
+            headers:{
+                'x-auth-token': token
+            }
+        }
+        if (window.confirm('Bạn có chắc chắn xóa?')){
+            const res = await axios.delete(`/api/profile/education/${id}`,config)
+            dispatch(ProfileStore(res.data)) 
+        } 
+    } catch (err) {
+        console.log(err)
+    }
+}
+export const deleteExperience = async(token,id,dispatch) =>{ 
+    try { 
+        const config = {
+            headers:{
+                'x-auth-token': token
+            }
+        }
+        if (window.confirm('Bạn có chắc chắn xóa?')){
+            const res = await axios.delete(`/api/profile/experience/${id}`,config)
+            dispatch(ProfileStore(res.data)) 
+        } 
     } catch (err) {
         console.log(err)
     }
