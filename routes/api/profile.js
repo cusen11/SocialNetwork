@@ -211,7 +211,7 @@ router.put('/experience', [auth,
 
         await profile.save()
 
-        res.status(200).json({ msg: "Update experience successful!!" })
+        res.status(200).json(profile)
     } catch (err) {
         console.error(err.message); 
         res.status(500).send('Server error!!!')
@@ -285,7 +285,7 @@ router.put('/education', [auth,
 
         await profile.save()
 
-        res.status(200).json({ msg: "Update education successful!!" })
+        res.status(200).json(profile)
     } catch (err) {
         console.error(err.message); 
         res.status(500).send('Server error!!!')

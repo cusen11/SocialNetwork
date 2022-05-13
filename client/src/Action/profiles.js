@@ -32,3 +32,32 @@ export const UpdateProfile = async (token,values, dispatch) => {
         console.log(err)
     }
 }
+
+export const addExperience = async (token, values, dispatch) =>{
+    try {
+        const config = {
+            headers:{
+                'x-auth-token': token,
+                'Content-Type':'application/json'
+            }
+        }
+        const res = await axios.put('/api/profile/experience',values,config)
+        dispatch(ProfileStore(res.data)) 
+    } catch (err) {
+        console.log(err)
+    }
+}
+export const addEdudation = async (token, values, dispatch) =>{
+    try { 
+        const config = {
+            headers:{
+                'x-auth-token': token,
+                'Content-Type':'application/json'
+            }
+        }
+        const res = await axios.put('/api/profile/education',values,config)
+        dispatch(ProfileStore(res.data)) 
+    } catch (err) {
+        console.log(err)
+    }
+}

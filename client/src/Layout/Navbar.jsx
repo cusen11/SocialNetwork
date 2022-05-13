@@ -11,7 +11,7 @@ function Navbar({data}) {
     const content =(
        <> 
         <Row gutter={[16, 16]}>
-            <Col xs={24} md={24}><Link to='/profile'>Cài đặt</Link></Col>
+            <Col xs={24} md={24}><Link to='/profile'>Hồ sơ</Link></Col>
             <Col xs={24} md={24}>
                 <Tooltip title="Logout"> 
                     <Button style={{width: '100%'}} 

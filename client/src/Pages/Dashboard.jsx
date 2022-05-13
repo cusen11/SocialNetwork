@@ -16,7 +16,7 @@ function Dashboard({dataToken}) {
     },[token,dispatch]) 
     return (
         <Row className="wrapperInner">
-            <Col>
+            <Col md={24} xs={24}>
                 {
                     posts?.map(post =>(
                         <Card key={post._id} style={{margin: '15px 0'}}>

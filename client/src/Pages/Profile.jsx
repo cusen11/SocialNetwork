@@ -35,7 +35,7 @@ function Profile({dataToken}) {
                 <Row className='wrapperInner'> 
                     <Row gutter={15}>
                         <Col>
-                            <ImageView img={profile.user.avatar}/>
+                            <ImageView img={userInfo.avatar}/>
                         </Col>
                         <Col>
                             <Title level={2}>{profile.user.username}</Title>
