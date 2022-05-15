@@ -121,8 +121,8 @@ router.delete('/:post_id',auth , async(req,res)=>{
             return res.status(401).json({msg: " User not authorized "});
 
         await post.remove();
-
-        res.json({ msg: "Post Removed"})
+        const posts = await Post.find({ user: req.user.id }).populate('user',['username','avatar']).sort({ createdAt : -1 });   
+        res.json(posts)
 
     } catch (err) {
         console.error(err.message);

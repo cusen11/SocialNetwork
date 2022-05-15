@@ -165,3 +165,19 @@ export const GetAllPostPagination = async (token,dispatch ,page,limit) =>{
         error(err.response.data.msg)
     }
 }
+export const removePostById = async(token, id, dispatch) => {
+    try {
+        const config={
+            headers:{
+                'x-auth-token': token
+            }
+        }
+        if (window.confirm('Bạn có chắc chắn xóa?')){
+            const res = await axios.delete(`/api/posts/${id}`,config)
+            dispatch(GetPostByUser(res)) 
+        } 
+        
+    } catch (err) {
+        error(err.response.data.msg)
+    }
+}

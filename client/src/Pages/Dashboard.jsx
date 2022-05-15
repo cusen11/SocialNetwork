@@ -1,8 +1,9 @@
+import { CloseOutlined } from '@ant-design/icons';
 import { Avatar, Card, Col, Row, Typography } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { formatDAY } from '../Action/func';
-import { GetPostByUserId } from '../Action/posts';
+import { GetPostByUserId, removePostById } from '../Action/posts';
 import CommentComponent from '../Component/Comment';
 import LikePost from '../Component/LikePost';
 
@@ -19,7 +20,11 @@ function Dashboard({dataToken}) {
             <Col md={24} xs={24}>
                 {
                     posts?.map(post =>(
-                        <Card key={post._id} style={{margin: '15px 0'}}>
+                        <Card key={post._id} style={{margin: '15px 0'}} className='box'>
+                            <CloseOutlined
+                                className='closeCmt' 
+                                onClick={()=>removePostById(token,post._id,dispatch)} 
+                            />
                             <Meta  avatar={<Avatar src={post.user.avatar}/>} title={post.user.username}/>
                             <Typography>{formatDAY(post.createdAt)}</Typography>
                             <br/>
