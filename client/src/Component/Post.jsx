@@ -19,8 +19,7 @@ function Post({dataToken}) {
     const posts = useSelector(state => state?.posts.value)
     useEffect(()=>{  
         const loadmoreIcon = document.querySelector('.loadmore'); 
-        if(loadmoreIcon) 
-            
+        if(loadmoreIcon) {
             window.addEventListener('scroll',async ()=> {
                 const a = window.innerHeight + window.scrollY
                 const b = loadmoreIcon.clientHeight + loadmoreIcon.offsetTop
@@ -30,8 +29,14 @@ function Post({dataToken}) {
                 else{
                     setLoad(false) 
                 }
-        })  
+            })
+        }  
     })
+    useEffect(()=>{
+        window.addEventListener('load',async ()=> {
+            GetAllPostPagination(token,dispatch, 1,5)
+        }) 
+    },[token,dispatch])
     const loadMoreFunc = () =>{ 
             if(posts.currentPage !== posts.totalPage){ 
                 setLimit(limit + 5)
