@@ -5,7 +5,7 @@ const auth = require('../../middlerware/auth');
 const { check, validationResult } = require('express-validator');
 
 const Post = require('../../models/Post');
-const User = require('../../models/user'); 
+const User = require('../../models/User'); 
 
 // @router    GET api/posts/add
 // desc       Create post
