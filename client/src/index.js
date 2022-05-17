@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App'; 
 import store from './store';
  
-import './Assets/Style/style.scss';
+import './Assets/Style/style.css';
 
 import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist'; 
