@@ -15,7 +15,11 @@ function MessageToID({size}) {
         form.resetFields();
       };
      
-    socket.on('message recieved',data => console.log(data)) 
+      useEffect(() => {
+        socket.on("message recieved", (newMessageRecieved) => {
+         console.log(newMessageRecieved)
+        });
+      });
     return (
         <Row style={{width:size,border: '1px solid'}} justify='start' wrap='wrap'>
             <Col md={24} xs={24} style={{height:'400px'}}>
