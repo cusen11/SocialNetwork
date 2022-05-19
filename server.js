@@ -29,4 +29,22 @@ if(process.env.NODE_ENV === 'production'){
 }
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, ()=> console.log(`Server start on PORT ${PORT}`))
+const server = app.listen(PORT, ()=> console.log(`Server start on PORT ${PORT}`))
+
+const io = require('socket.io')(server,{
+    pingTimeout: 60000,
+    cors:{
+        origin: 'http://localhost:3000'
+    }
+})
+io.on('connection',(socket)=>{ 
+    socket.on('setup',(dataUser)=>{
+       socket.join(dataUser._id)   
+    })
+    socket.on('message-to-id-server',(values)=>{ 
+        const { room } = values 
+        socket.join('123');
+        socket.in('123').emit("message-to-id-client",values); 
+       
+    })   
+})

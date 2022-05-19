@@ -12,7 +12,7 @@ export const connectServer = (dataUser) =>{
 }
 
 export const SendMessageToUserID = (values,room) =>{ 
-    socket.emit('message-to-id-server', {values,room}) 
+     return socket.emit('message-to-id-server', {values,room}) 
 }
 
 export const GetMessageToUserID = () =>{ 
