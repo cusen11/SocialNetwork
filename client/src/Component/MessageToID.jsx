@@ -16,8 +16,8 @@ function MessageToID({size}) {
       };
      
     useEffect(() => {
-        socket.on("message-to-id-client", function(data){
-            console.log('123123')
+        socket.on("message-to-id-client", (values) => {
+            console.log(values)
         });
     });
     return (

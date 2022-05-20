@@ -39,12 +39,13 @@ const io = require('socket.io')(server,{
 })
 io.on('connection',(socket)=>{ 
     socket.on('setup',(dataUser)=>{
-       socket.join(dataUser._id)   
+       socket.join(dataUser._id)  
     })
     socket.on('message-to-id-server',(values)=>{ 
-        const { room } = values 
-        socket.join('123');
-        socket.in('123').emit("message-to-id-client",values); 
+        const { room } = values  
+        socket.join(room);
+        socket.in(room).emit("message-to-id-client", values);  
+
        
     })   
 })
