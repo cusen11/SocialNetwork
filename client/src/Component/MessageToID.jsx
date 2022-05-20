@@ -19,6 +19,8 @@ function MessageToID({size}) {
         socket.on("message-to-id-client", (values) => {
             console.log(values)
         });
+        socket.on("system message", msg => console.log(msg));
+        socket.on('some room', ()=> console.log('abc'))
     });
     return (
         <Row style={{width:size,border: '1px solid'}} justify='start' wrap='wrap'>

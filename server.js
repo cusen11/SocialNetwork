@@ -37,15 +37,17 @@ const io = require('socket.io')(server,{
         origin: 'http://localhost:3000'
     }
 })
-io.on('connection',(socket)=>{ 
+io.on('connection', (socket)=>{ 
     socket.on('setup',(dataUser)=>{
-       socket.join(dataUser._id)  
+       socket.join(dataUser._id)
+       socket.join('roomne')  
+       console.log(io.sockets.adapter.rooms)
+       io.sockets.in(dataUser._id).emit('system message', `bạn đã vào room: ${dataUser._id} ${socket.rooms} `);
     })
     socket.on('message-to-id-server',(values)=>{ 
-        const { room } = values  
-        socket.join(room);
-        socket.in(room).emit("message-to-id-client", values);  
-
-       
-    })   
+        const { room } = values    
+        io.emit("message-to-id-client", values);   
+    })       
+    console.log(io.sockets.adapter.rooms)
+    io.to('627e1874b54c3e202316dd04').emit('some event');
 })
