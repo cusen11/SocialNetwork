@@ -42,26 +42,7 @@ io.on('connection', (socket)=>{
     socket.on('setup',async(data)=>{ 
         socket.join(data._id)
         // push user login to mongoose
-        try {  
-            const data = {
-                listUser:{
-                    data
-            }}
-            const userExist = await Socket.find();
-            // UserSocket.unshift(data) 
-            // await UserSocket.save() 
-            console.log({userExist})
-            // if(!userExist){
-            //     UserSocket.listUser.push(data) 
-            //     UserSocket.save() 
-            // }else{
-            //     console.log('user exist')
-            // }
-                
-        } catch (err) {
-            console.error(err.message); 
-            res.status(500).send('Server error!!!')
-        }
+        
         socket.on("disconnect", () => {
             // delete user login from mongoose
             console.log(`${data.username} đã thoát`)
