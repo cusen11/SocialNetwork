@@ -1,6 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
-const path = require('path')
+const path = require('path');
+const Socket = require('./models/Socket');
 
 const app = express();
 //connect DB
@@ -37,12 +38,40 @@ const io = require('socket.io')(server,{
         origin: 'http://localhost:3000'
     }
 })
-io.on('connection', (socket)=>{ 
-    socket.on('setup',(dataUser)=>{
-       socket.join(dataUser._id)  
+io.on('connection', (socket)=>{  
+    socket.on('setup',async(data)=>{ 
+        socket.join(data._id)
+        // push user login to mongoose
+        try {  
+            const data = {
+                listUser:{
+                    data
+            }}
+            const userExist = await Socket.find();
+            // UserSocket.unshift(data) 
+            // await UserSocket.save() 
+            console.log({userExist})
+            // if(!userExist){
+            //     UserSocket.listUser.push(data) 
+            //     UserSocket.save() 
+            // }else{
+            //     console.log('user exist')
+            // }
+                
+        } catch (err) {
+            console.error(err.message); 
+            res.status(500).send('Server error!!!')
+        }
+        socket.on("disconnect", () => {
+            // delete user login from mongoose
+            console.log(`${data.username} đã thoát`)
+        }); 
     })
-    socket.on('message-to-id-server',(values)=>{ 
-        const { room } = values    
-        io.emit("message-to-id-client", values);   
-    })        
-})
+    socket.on('client-send-data',(data)=>{ 
+        io.emit('server-send-data',data.dataText)  
+        io.in(data.dataUser._id).emit('server-send-data-room',data.dataText)
+    }) 
+    //disonnect
+    
+
+}) 
