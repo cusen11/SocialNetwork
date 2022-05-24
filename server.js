@@ -1,7 +1,6 @@
 const express = require('express');
 const connectDB = require('./config/db');
-const path = require('path');
-const Socket = require('./models/Socket');
+const path = require('path'); 
 
 const app = express();
 //connect DB
@@ -17,7 +16,9 @@ app.use(express.json({ extended: false }));
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/posts', require('./routes/api/posts'));
 app.use('/api/profile', require('./routes/api/profile'));
-app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/auth', require('./routes/api/auth')); 
+app.use('/api/conversation', require('./routes/api/conversation')); 
+app.use('/api/message', require('./routes/api/message')); 
 
 // server static assets in production 
 
@@ -35,10 +36,13 @@ const server = app.listen(PORT, ()=> console.log(`Server start on PORT ${PORT}`)
 const io = require('socket.io')(server,{
     pingTimeout: 60000,
     cors:{
-        origin: 'http://localhost:3000'
+        origin: 'http://localhost:3000' 
     }
 })
 io.on('connection', (socket)=>{  
+
+    let users =[]
+
     socket.on('setup',async(data)=>{ 
         socket.join(data._id)
         // push user login to mongoose

@@ -4,23 +4,26 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';  
 import io from 'socket.io-client';
 import axios from 'axios' 
+import { GetMessageByConversationId } from '../Action/message';
+import Message from './Message';
 
 function MessageToID({token,size}) {
     const ENDPONT = 'http://localhost:5000/'
     const socket = io(ENDPONT)
-    const dataUser = useSelector(state => state.login.info) 
+    const dataUser = useSelector(state => state.login.info)  
     const [form] = Form.useForm();
     const [dataText, setDataText] = useState('')
+    const [messages, setMessages] = useState()
     const [ client, setClient ] = useState()
     const [ room, setRoom ] = useState() 
     const onFinish = () => {   
         socket.emit('client-send-data',{dataUser, dataText})
         form.resetFields();
     };
-     
+    const tokenKey = token.value.request_token.token
     useEffect(()=>{
         socket.on('connect', async()=>{
-            const tokenKey = token.value.request_token.token
+            
             try {
                 const config = {
                     headers:{
@@ -40,13 +43,25 @@ function MessageToID({token,size}) {
             setRoom(data)
         })
         socket.on('server-send-data',(data)=>{
-            setClient(data)
-            console.log('client'+ data)
+            setClient(data) 
     })
+    
     },[]) 
+
+    useEffect(()=>{
+        const getMassage = async()=>{
+            const newMessage = await GetMessageByConversationId(tokenKey,'628c90cb6361e4ccb74ee28d')
+            setMessages(newMessage)
+        }
+        getMassage()
+    },[tokenKey])
     return (
         <Row style={{width:size,border: '1px solid'}} justify='start' wrap='wrap'>
             <Col md={24} xs={24} style={{height:'400px'}}>
+                
+                {messages?.map(m =>
+                    <Message data={m} position={dataUser._id !== m.user._id ? true : false}/>
+                )}
 
             </Col>
             <Col md={24} xs={24}>

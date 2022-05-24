@@ -63,3 +63,18 @@ li{
 .ant-popover-placement-bottomRight .ant-popover-arrow {
     right: 7px;
 }
+.current{
+    text-align: right;
+}
+.message-box span.text-box{
+    padding: 5px 10px; 
+    margin: 10px 5px;
+    border-radius: 5px;
+    display: inline-block;
+    background: #fafafa;
+}
+.current span.text-box{
+    background-color: rgb(0, 132, 255);
+    border: 0;
+    color: #fff;
+}
