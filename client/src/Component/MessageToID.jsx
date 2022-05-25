@@ -44,7 +44,10 @@ function MessageToID({token,size}) {
         })
         socket.on('server-send-data',(data)=>{
             setClient(data) 
-    })
+        })
+        socket.on('getUser',data =>{
+            console.log(data)
+        })
     
     },[]) 
 
@@ -56,11 +59,11 @@ function MessageToID({token,size}) {
         getMassage()
     },[tokenKey])
     return (
-        <Row style={{width:size,border: '1px solid'}} justify='start' wrap='wrap'>
-            <Col md={24} xs={24} style={{height:'400px'}}>
+        <Row style={{width:size,border: '1px solid',padding:'10px'}} justify='start' wrap='wrap'>
+            <Col md={24} xs={24} style={{height:'300px'}}>
                 
                 {messages?.map(m =>
-                    <Message data={m} position={dataUser._id !== m.user._id ? true : false}/>
+                    <Message key={m._id} data={m} position={dataUser._id !== m.user._id ? true : false}/>
                 )}
 
             </Col>

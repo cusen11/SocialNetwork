@@ -39,19 +39,26 @@ const io = require('socket.io')(server,{
         origin: 'http://localhost:3000' 
     }
 })
+let users =[]
+const addUser = (data,socketId) => {
+    !users.some(user => user.userId === data._id) && users.push({data, socketId});
+}
+const removeUser = (data) => { 
+    item = users.map((user) => {return user.userId}).indexOf(data._id); 
+    users.splice(item, 1);
+}
 io.on('connection', (socket)=>{  
-
-    let users =[]
-
-    socket.on('setup',async(data)=>{ 
-        socket.join(data._id)
-        // push user login to mongoose
+    socket.on('setup',(data)=>{ 
+        socket.join(data._id) 
+        addUser(data,socket.id)
+        io.emit('getUser', users)
         
-        socket.on("disconnect", () => {
-            // delete user login from mongoose
-            console.log(`${data.username} đã thoát`)
-        }); 
-    })
+        socket.on('disconnect' , ()=> {
+            removeUser(data)
+            io.emit('getUser', users)
+        })
+        
+    }) 
     socket.on('client-send-data',(data)=>{ 
         io.emit('server-send-data',data.dataText)  
         io.in(data.dataUser._id).emit('server-send-data-room',data.dataText)
