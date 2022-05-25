@@ -1,4 +1,4 @@
-import { SendOutlined } from '@ant-design/icons';
+import { CloseOutlined, MinusOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Row } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';  
@@ -12,7 +12,7 @@ function MessageToID({token}) {
     const ENDPONT = 'http://localhost:5000/'
     const socket = io(ENDPONT)
     const dataUser = useSelector(state => state.login.info)   
-
+    const [height, setHeight] = useState(false)
     const boxMessage = useRef()
 
     const [form] = Form.useForm();
@@ -35,6 +35,14 @@ function MessageToID({token}) {
             } 
         } 
         setMessages(messages => [...messages,newa]) 
+        setTimeout(()=>{
+            boxMessage.current.scrollIntoView(
+                {
+                  behavior: 'smooth',
+                  block: 'end',
+                  inline: 'nearest'
+                })
+        })
     };
     const tokenKey = token.value.request_token.token
     useEffect(()=>{
@@ -61,10 +69,7 @@ function MessageToID({token}) {
         socket.on('server-send-data',(data)=>{
             setClient(data)
             console.log(data) 
-        })
-        socket.on('getUser',data =>{
-            console.log(data)
-        })
+        }) 
     
     },[]) 
 
@@ -84,31 +89,42 @@ function MessageToID({token}) {
         getMassage()
         
     },[tokenKey])
+    const handleCloseMessage = () =>{
+        console.log('close id')
+    }
     return (
-        <Row className="chat-box" justify='start' wrap='wrap'>
-            <Col md={24} xs={24} className="name-box"><Link to='/'>Thùy Trang</Link></Col> 
-            <Col md={24} xs={24} className="box-massage" >
-                
-                {messages?.map((m,index) =>
-                    <Message key={index} data={m} position={dataUser._id !== m.user._id ? true : false}/>
-                )}
-                <span ref={boxMessage}></span>
-               
-            </Col>
-            <Col md={24} xs={24}>
-                <Form 
-                    form={form} 
-                    name='basic'
-                    style={{width:'100%',display:'flex',padding: '0 20px', marginTop:'30px'}}
-                    onFinish={onFinish} 
-                >
-                    <Form.Item name='text' style={{width:'100%'}}>
-                        <Input className='input-message' placeholder='Tâm sự mỏng tại đây...' onChange={(e)=> setDataText(e.target.value)} />
-                    </Form.Item>
+        <Row className="chat-box">
+            <Row className="name-box" justify='space-between' style={{width: '100%'}}>
+                <Col style={{width: '30%'}}><Link to='/'>Thùy Trang</Link></Col> 
+                <Col style={{width: '60%', height:'100%'}} onClick={()=> setHeight(!height) } ></Col>
+                <Col style={{width: '10%'}}>
+                    <Button onClick={()=>handleCloseMessage()} ghost icon={<CloseOutlined/>} /> 
+                </Col>
+            </Row>
+            
+            <Row  justify='start' wrap='wrap' style={{height: height ? '360px' : '0' }}>
+                <Col md={24} xs={24} className="box-massage">
                     
-                </Form>
+                    {messages?.map((m,index) =>
+                        <Message key={index} data={m} position={dataUser._id !== m.user._id ? true : false}/>
+                    )}
+                    <span ref={boxMessage}></span>
                 
-            </Col>   
+                </Col>
+                <Col md={24} xs={24} >
+                    <Form 
+                        form={form} 
+                        name='basic'
+                        style={{width:'100%',display:'flex',padding: '0 20px', marginTop:'30px'}}
+                        onFinish={onFinish} 
+                    >
+                        <Form.Item name='text' style={{width:'100%'}}>
+                            <Input className='input-message' placeholder='Tâm sự mỏng tại đây...' onChange={(e)=> setDataText(e.target.value)} />
+                        </Form.Item>
+                        
+                    </Form> 
+                </Col>  
+            </Row> 
         </Row>
     );
 }

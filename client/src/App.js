@@ -11,6 +11,7 @@ import LoginForm from './Component/LoginForm';
 import setAuthToken from './utils/auth';
 import Dashboard from './Pages/Dashboard';   
 import MessageToID from './Component/MessageToID';
+import UserOnline from './Component/UserOnline';
 
 const App = () => { 
   const token = useSelector(state => state?.login)   
@@ -24,6 +25,7 @@ const App = () => {
     <BrowserRouter>  
         <Navbar data={token}/> 
           {!token.value.status ? '' : <MessageToID token={token}/> }
+          {!token.value.status ? '' : <UserOnline/> }
           <Routes> 
             <Route path="/" element={!token.value.status ? <LoginForm/> : <HomePage dataToken={token}/> }/>  
             <Route path="/registration" element={<Registration/>}/>   
