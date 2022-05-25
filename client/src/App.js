@@ -23,7 +23,7 @@ const App = () => {
   return(
     <BrowserRouter>  
         <Navbar data={token}/> 
-          {!token.value.status ? '' : <MessageToID token={token} size={300}/> }
+          {!token.value.status ? '' : <MessageToID token={token}/> }
           <Routes> 
             <Route path="/" element={!token.value.status ? <LoginForm/> : <HomePage dataToken={token}/> }/>  
             <Route path="/registration" element={<Registration/>}/>   

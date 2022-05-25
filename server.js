@@ -48,11 +48,12 @@ const removeUser = (data) => {
     users.splice(item, 1);
 }
 io.on('connection', (socket)=>{  
+    //setup user login
     socket.on('setup',(data)=>{ 
         socket.join(data._id) 
         addUser(data,socket.id)
         io.emit('getUser', users)
-        
+        //disconnect user
         socket.on('disconnect' , ()=> {
             removeUser(data)
             io.emit('getUser', users)
@@ -60,10 +61,10 @@ io.on('connection', (socket)=>{
         
     }) 
     socket.on('client-send-data',(data)=>{ 
-        io.emit('server-send-data',data.dataText)  
+        
+        io.emit('server-send-data',data)  
         io.in(data.dataUser._id).emit('server-send-data-room',data.dataText)
-    }) 
-    //disonnect
+    })  
     
 
 }) 

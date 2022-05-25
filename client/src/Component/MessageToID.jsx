@@ -1,16 +1,20 @@
 import { SendOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Row } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';  
 import io from 'socket.io-client';
 import axios from 'axios' 
 import { GetMessageByConversationId } from '../Action/message';
 import Message from './Message';
+import { Link } from 'react-router-dom';
 
-function MessageToID({token,size}) {
+function MessageToID({token}) {
     const ENDPONT = 'http://localhost:5000/'
     const socket = io(ENDPONT)
-    const dataUser = useSelector(state => state.login.info)  
+    const dataUser = useSelector(state => state.login.info)   
+
+    const boxMessage = useRef()
+
     const [form] = Form.useForm();
     const [dataText, setDataText] = useState('')
     const [messages, setMessages] = useState()
@@ -18,7 +22,19 @@ function MessageToID({token,size}) {
     const [ room, setRoom ] = useState() 
     const onFinish = () => {   
         socket.emit('client-send-data',{dataUser, dataText})
+        
         form.resetFields();
+        
+        const newa = { 
+            conversationId: "628c90cb6361e4ccb74ee28d",
+            text: "nô nô",
+            user: {
+                _id: "623ada0bc390cedaeb576637",
+                username: "Thành Tuân",
+                avatar: "//www.gravatar.com/avatar/c0c5d1d5c10532a79a57c74c6b78805c?s=200&r=pg&d=mm"
+            } 
+        } 
+        setMessages(messages => [...messages,newa]) 
     };
     const tokenKey = token.value.request_token.token
     useEffect(()=>{
@@ -43,7 +59,8 @@ function MessageToID({token,size}) {
             setRoom(data)
         })
         socket.on('server-send-data',(data)=>{
-            setClient(data) 
+            setClient(data)
+            console.log(data) 
         })
         socket.on('getUser',data =>{
             console.log(data)
@@ -52,40 +69,46 @@ function MessageToID({token,size}) {
     },[]) 
 
     useEffect(()=>{
-        const getMassage = async()=>{
+        const getMassage = async()=>{ 
             const newMessage = await GetMessageByConversationId(tokenKey,'628c90cb6361e4ccb74ee28d')
             setMessages(newMessage)
+            
+            boxMessage.current.scrollIntoView(
+                {
+                  behavior: 'smooth',
+                  block: 'end',
+                  inline: 'nearest'
+                })
+
         }
         getMassage()
+        
     },[tokenKey])
     return (
-        <Row style={{width:size,border: '1px solid',padding:'10px'}} justify='start' wrap='wrap'>
-            <Col md={24} xs={24} style={{height:'300px'}}>
+        <Row className="chat-box" justify='start' wrap='wrap'>
+            <Col md={24} xs={24} className="name-box"><Link to='/'>Thùy Trang</Link></Col> 
+            <Col md={24} xs={24} className="box-massage" >
                 
-                {messages?.map(m =>
-                    <Message key={m._id} data={m} position={dataUser._id !== m.user._id ? true : false}/>
+                {messages?.map((m,index) =>
+                    <Message key={index} data={m} position={dataUser._id !== m.user._id ? true : false}/>
                 )}
-
+                <span ref={boxMessage}></span>
+               
             </Col>
             <Col md={24} xs={24}>
                 <Form 
                     form={form} 
                     name='basic'
-                    style={{width:'100%',display:'flex'}}
+                    style={{width:'100%',display:'flex',padding: '0 20px', marginTop:'30px'}}
                     onFinish={onFinish} 
                 >
-                    <Form.Item name='text' style={{width:'85%'}}>
-                        <Input onChange={(e)=> setDataText(e.target.value)} />
+                    <Form.Item name='text' style={{width:'100%'}}>
+                        <Input className='input-message' placeholder='Tâm sự mỏng tại đây...' onChange={(e)=> setDataText(e.target.value)} />
                     </Form.Item>
-                    <Form.Item style={{width:'15%'}} >
-                        <Button type='primary' htmlType='submit' icon={<SendOutlined />}/>
-                    </Form.Item> 
+                    
                 </Form>
                 
-            </Col>  
-            <h2 style={{width:'100%'}}>room {room}</h2>
-            <br/>
-            <h2 style={{width:'100%'}}>client {client}</h2>
+            </Col>   
         </Row>
     );
 }

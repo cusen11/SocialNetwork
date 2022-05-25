@@ -41,9 +41,61 @@ li{
     border-radius: 10px;
     padding: 0 10px;
 }
+.chat-box{
+    border-radius: 5px;
+    background-color: #ccc;
+    position: fixed;
+    bottom: 0;
+    right: 30px;
+    width: 320px;
+    padding:30px 0 15px 0;
+    row-gap: 0px;
+    box-shadow: 0px 0px 20px 0px #ccc;
+    z-index: 100;
+}
+.chat-box .ant-form-item{
+    margin: 0;
+}
+.chat-box .name-box{
+    height: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    top: -10px;
+    left: 0;
+    width: 100%; 
+    background-color: #0084ff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.chat-box .name-box a{
+    padding: 0 20px;
+    font-weight: bold;
+    color: #fff;
+}
+.chat-box .name-box a:hover{
+    padding: 0 20px;
+    font-weight: bold;
+    color: #fff;
+}
 .comment-box:hover { 
     background-color: rgb(238, 237, 237); 
 }
+.box-massage{
+    height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;   
+} 
+.box-massage::-webkit-scrollbar {
+    display: none;
+  }
+   
+  .box-massage {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
 .box:hover .closeCmt{
     opacity: 1;
    
@@ -62,13 +114,20 @@ li{
 }
 .ant-popover-placement-bottomRight .ant-popover-arrow {
     right: 7px;
-}
+} 
 .current{
     text-align: right;
 }
+.input-message{
+    width: 50%;
+    border-radius: 30px;
+}
+.input-message:focus{
+    width: 100%;
+}
 .message-box span.text-box{
     padding: 5px 10px; 
-    margin: 10px 5px;
+    margin: 5px 5px;
     border-radius: 5px;
     display: inline-block;
     background: #fafafa;
@@ -77,4 +136,7 @@ li{
     background-color: rgb(0, 132, 255);
     border: 0;
     color: #fff;
+}
+.message-box{
+    margin: 0 10px;
 }
