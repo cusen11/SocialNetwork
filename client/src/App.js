@@ -10,8 +10,7 @@ import { useSelector } from 'react-redux';
 import LoginForm from './Component/LoginForm';  
 import setAuthToken from './utils/auth';
 import Dashboard from './Pages/Dashboard';   
-import MessageToID from './Component/MessageToID';
-import UserOnline from './Component/UserOnline';
+import MessageToID from './Component/MessageToID'; 
 
 const App = () => { 
   const token = useSelector(state => state?.login)   
@@ -24,8 +23,7 @@ const App = () => {
   return(
     <BrowserRouter>  
         <Navbar data={token}/> 
-          {!token.value.status ? '' : <MessageToID token={token}/> }
-          {!token.value.status ? '' : <UserOnline/> }
+          {!token.value.status ? '' : <MessageToID token={token}/> } 
           <Routes> 
             <Route path="/" element={!token.value.status ? <LoginForm/> : <HomePage dataToken={token}/> }/>  
             <Route path="/registration" element={<Registration/>}/>   

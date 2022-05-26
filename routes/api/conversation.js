@@ -38,4 +38,17 @@ router.post('/', async(req,res)=>{
     }
 }) 
 
+router.post('/contant',async (req,res)=>{
+    const {senderId, userId} = req.body 
+    try {
+        
+        const result = await Conversation.find({members:{$all:[senderId,userId] }})
+        res.status(200).send(result)
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error!!!')
+    }
+})
+
 module.exports = router;

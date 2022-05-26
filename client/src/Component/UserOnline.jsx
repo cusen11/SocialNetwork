@@ -10,8 +10,7 @@ function UserOnline() {
     useEffect(()=>{
         socket.on('connect', async()=>{ 
             socket.on('getUser',data =>{
-                setUsers(data) 
-                console.log(data)
+                setUsers(data)  
             })
         }) 
     },[users]) 

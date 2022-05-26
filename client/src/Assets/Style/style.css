@@ -43,8 +43,8 @@ li{
 }
 .chat-box{
     border-radius: 5px;
-    background-color: #fff;
-    position: fixed;
+    background-color: #fff; 
+    position: relative;
     bottom: 0;
     right: 30px;
     width: 320px;
@@ -52,11 +52,13 @@ li{
     row-gap: 0px;
     box-shadow: 0px 0px 20px 0px #ccc;
     z-index: 100;
+    margin-left: 10px;
 }
 .chat-box .ant-form-item{
     margin: 0;
 }
 .chat-box .name-box{
+   
     height: 40px;
     width: 100%; 
     align-items: center;
@@ -65,7 +67,7 @@ li{
     padding: 0 10px;
     left: 0;
     width: 100%; 
-    background-color: #0084ff;
+    background-color: #28a9f1;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     z-index: 300;
@@ -84,7 +86,8 @@ li{
     right: 0;
     top:150px;
     width: 300px;
-    z-index: 60;
+    z-index: 60; 
+    position: fixed;
 
 }
 .chat-box.list-friend .name-box{ 
@@ -103,7 +106,7 @@ li{
     position: relative;
     font-size: 14px;
     font-weight: bold;
-    color: #41434d;
+    color: #28a9f1;
     cursor: pointer;
 }
 .chat-box .online-friend li::before{
@@ -115,11 +118,19 @@ li{
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #0084ff;
-    box-shadow: 0px 0px 11px 4px #fff;
+    background: #1aa63e;
+    box-shadow: 0px 0px 2px 1px rgb(26 166 62);
 }
 .comment-box:hover { 
     background-color: rgb(238, 237, 237); 
+}
+.box-chat-parent{
+    display: flex;
+    justify-content: flex-end;
+    position: fixed;
+    bottom: 0;
+    z-index: 1000;
+    right: 0;
 }
 .box-massage{
     height: 300px;
