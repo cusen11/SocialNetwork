@@ -4,20 +4,21 @@ import Message from './Message';
 import io from 'socket.io-client'; 
 import { CloseOutlined } from '@ant-design/icons';
 import { GetConversationId, GetMessageByConversationId } from '../Action/message';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { Link } from 'react-router-dom'; 
 import { useSelector } from 'react-redux';
 
 function SingleChat({token,data}) { 
     const dataUser = useSelector(state => state.login.info) 
     const ENDPONT = 'http://localhost:5000/'
     const socket = io(ENDPONT)
-    const [height, setHeight] = useState(false) 
+    const [height, setHeight] = useState(true) 
     const [messages, setMessages] = useState()
+    const [conversationId, setConversationId] = useState()
     const [ client, setClient ] = useState()
     const [ room, setRoom ] = useState()  
     const [dataText, setDataText] = useState('')
     const boxMessage = useRef() 
+console.log(data)
     const [form] = Form.useForm();
     const onFinish = () => {   
         socket.emit('client-send-data',{dataUser, dataText}) 
@@ -54,10 +55,10 @@ function SingleChat({token,data}) {
         })  
         const GetConversationID = async() =>{
             const conversationResult = await GetConversationId(data.conversation) 
-            if(conversationResult.length === 0){ 
-                console.log('khởi tạo nhóm chat')
-            }else {
-                console.log('không làm gì')
+            if(conversationResult.length === 0){  
+                console.log('tạo mới cuộc hội thoại')
+            }else { 
+                setConversationId(conversationResult[0]._id)
             }
         }
         GetConversationID()
@@ -65,7 +66,7 @@ function SingleChat({token,data}) {
     },[]) 
     useEffect(()=>{
         const getMassage = async()=>{ 
-            const newMessage = await GetMessageByConversationId(token,'conversationId')
+            const newMessage = await GetMessageByConversationId(token,conversationId)
             setMessages(newMessage)
             
             boxMessage.current.scrollIntoView(
@@ -74,16 +75,15 @@ function SingleChat({token,data}) {
                   block: 'end',
                   inline: 'nearest'
                 })
-
         }
         getMassage()
         
-    },[token])
+    },[conversationId])
     return (
         <Row className="chat-box">
             <Row className="name-box" justify='space-between' style={{width: '100%'}}>
-                <Col style={{width: '30%'}}><Link to='/'>Thùy Trang</Link></Col> 
-                <Col style={{width: '60%', height:'100%'}} onClick={()=> setHeight(!height) } ></Col>
+                <Col><Link to='/'>{data.user.data.username}</Link></Col> 
+                <Col style={{width: '50%', height:'100%'}} onClick={()=> setHeight(!height) } ></Col>
                 <Col style={{width: '10%'}}>
                     <Button onClick={()=>handleCloseMessage()} ghost icon={<CloseOutlined/>} /> 
                 </Col>
