@@ -15,3 +15,18 @@ export const GetMessageByConversationId = async (token,id) =>{
         error(err.response.data.msg)
     }
 }
+
+export const GetConversationId = async (data) =>{
+    try {
+        const config = {
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        } 
+        const res = await axios.post('/api/conversation/contant',data,config)  
+        return res.data
+       
+    } catch (err) {
+        console.log(err.response.data.mgs)
+    }
+}

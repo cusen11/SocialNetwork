@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Message from './Message';
 import io from 'socket.io-client'; 
 import { CloseOutlined } from '@ant-design/icons';
-import { GetMessageByConversationId } from '../Action/message';
+import { GetConversationId, GetMessageByConversationId } from '../Action/message';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -52,22 +52,16 @@ function SingleChat({token,data}) {
         socket.on('server-send-data',(data)=>{
             setClient(data) 
         })  
-        const getConversationId = async() =>{
-            try {
-                const config = {
-                    headers:{
-                        'Content-Type': 'application/json'
-                    }
-                }
-                const body = data.conversation 
-                const res = await axios.post('/api/conversation/contant',body,config)
-                console.log(res.data)
-               
-            } catch (err) {
-                console.log(err.response.data.mgs)
+        const GetConversationID = async() =>{
+            const conversationResult = await GetConversationId(data.conversation) 
+            if(conversationResult.length === 0){ 
+                console.log('khởi tạo nhóm chat')
+            }else {
+                console.log('không làm gì')
             }
         }
-        getConversationId()
+        GetConversationID()
+       
     },[]) 
     useEffect(()=>{
         const getMassage = async()=>{ 
