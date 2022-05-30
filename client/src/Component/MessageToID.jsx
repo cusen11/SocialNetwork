@@ -41,14 +41,22 @@ function MessageToID({token}) {
             "userId":user.data._id
         }
         const newChatData = {conversation, user}
-        setChatData(chatData => [...chatData,newChatData])  
+        const foundSocketId = chatData.some(e => e.user.socketId === user.socketId)
+        if(!foundSocketId)
+            setChatData(chatData => [...chatData,newChatData]) 
     }
+    const handleCloseMessage = (id) =>{
+        const removeIndex = chatData.map(e => e.user.socketId === id).indexOf(id) 
+        setChatData(chatData => chatData.splice(removeIndex, 0)); 
+        
+    }
+ 
     return (
         <>
             <div className='box-chat-parent'>
                 {
                     chatData.map((chat,index) => (
-                        <SingleChat key={index} token={tokenKey} data={chat} /> 
+                        <SingleChat key={index} token={tokenKey} data={chat} handleCloseMessage={(id)=>handleCloseMessage(id)} /> 
                     ))
                 }
                

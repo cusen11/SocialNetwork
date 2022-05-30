@@ -7,7 +7,7 @@ import { GetConversationId, GetMessageByConversationId } from '../Action/message
 import { Link } from 'react-router-dom'; 
 import { useSelector } from 'react-redux';
 
-function SingleChat({token,data}) { 
+function SingleChat({token,data, handleCloseMessage}) { 
     const dataUser = useSelector(state => state.login.info) 
     const ENDPONT = 'http://localhost:5000/'
     const socket = io(ENDPONT)
@@ -17,8 +17,7 @@ function SingleChat({token,data}) {
     const [ client, setClient ] = useState()
     const [ room, setRoom ] = useState()  
     const [dataText, setDataText] = useState('')
-    const boxMessage = useRef() 
-console.log(data)
+    const boxMessage = useRef()  
     const [form] = Form.useForm();
     const onFinish = () => {   
         socket.emit('client-send-data',{dataUser, dataText}) 
@@ -42,10 +41,7 @@ console.log(data)
                   inline: 'nearest'
                 })
         })
-    };
-    const handleCloseMessage = () =>{
-        console.log('close id')
-    }
+    }; 
     useEffect(()=>{ 
         socket.on('server-send-data-room',(data)=>{
             setRoom(data)
@@ -78,14 +74,15 @@ console.log(data)
         }
         getMassage()
         
-    },[conversationId])
+    },[conversationId]) 
+    
     return (
         <Row className="chat-box">
             <Row className="name-box" justify='space-between' style={{width: '100%'}}>
                 <Col><Link to='/'>{data.user.data.username}</Link></Col> 
                 <Col style={{width: '50%', height:'100%'}} onClick={()=> setHeight(!height) } ></Col>
                 <Col style={{width: '10%'}}>
-                    <Button onClick={()=>handleCloseMessage()} ghost icon={<CloseOutlined/>} /> 
+                    <Button onClick={()=>handleCloseMessage(data.user.socketId)} ghost icon={<CloseOutlined/>} /> 
                 </Col>
             </Row>
             
