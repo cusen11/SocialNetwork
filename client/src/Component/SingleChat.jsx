@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Message from './Message';
 import io from 'socket.io-client'; 
 import { CloseOutlined } from '@ant-design/icons';
-import { GetConversationId, GetMessageByConversationId } from '../Action/message';
+import { GetConversationId, GetMessageByConversationId, sendTextConversationId } from '../Action/message';
 import { Link } from 'react-router-dom'; 
 import { useSelector } from 'react-redux';
 
@@ -14,8 +14,7 @@ function SingleChat({token,data, handleCloseMessage}) {
     const [height, setHeight] = useState(true) 
     const [messages, setMessages] = useState()
     const [conversationId, setConversationId] = useState()
-    const [ client, setClient ] = useState()
-    const [ room, setRoom ] = useState()  
+    const [ client, setClient ] = useState() 
     const [dataText, setDataText] = useState('')
     const boxMessage = useRef()  
     const [form] = Form.useForm();
@@ -23,16 +22,17 @@ function SingleChat({token,data, handleCloseMessage}) {
         socket.emit('client-send-data',{dataUser, dataText}) 
         form.resetFields();
         
-        const newa = { 
-            conversationId: data.conversation,
-            text: "nô nô",
+        const newMessages = { 
+            conversationId: conversationId,
+            text: dataText,
             user: {
-                _id: "623ada0bc390cedaeb576637",
-                username: "Thành Tuân",
-                avatar: "//www.gravatar.com/avatar/c0c5d1d5c10532a79a57c74c6b78805c?s=200&r=pg&d=mm"
+                _id: dataUser._id,
+                username: dataUser.username,
+                avatar: dataUser.avatar
             } 
-        } 
-        setMessages(messages => [...messages,newa]) 
+        }  
+        sendTextConversationId(token,conversationId,dataText) 
+        setMessages(messages => [...messages,newMessages])  
         setTimeout(()=>{
             boxMessage.current.scrollIntoView(
                 {
@@ -42,23 +42,20 @@ function SingleChat({token,data, handleCloseMessage}) {
                 })
         })
     }; 
-    useEffect(()=>{ 
-        socket.on('server-send-data-room',(data)=>{
-            setRoom(data)
-        })
+    useEffect(()=>{  
         socket.on('server-send-data',(data)=>{
-            setClient(data) 
+            setClient(data)
+            console.log(client)
         })  
         const GetConversationID = async() =>{
             const conversationResult = await GetConversationId(data.conversation) 
             if(conversationResult.length === 0){  
                 console.log('tạo mới cuộc hội thoại')
             }else { 
-                setConversationId(conversationResult[0]._id)
+                setConversationId(conversationResult[0]._id)  
             }
         }
-        GetConversationID()
-       
+        GetConversationID() 
     },[]) 
     useEffect(()=>{
         const getMassage = async()=>{ 
@@ -72,10 +69,9 @@ function SingleChat({token,data, handleCloseMessage}) {
                   inline: 'nearest'
                 })
         }
-        getMassage()
-        
-    },[conversationId]) 
-    
+        getMassage() 
+    },[conversationId])  
+    console.log(data)
     return (
         <Row className="chat-box">
             <Row className="name-box" justify='space-between' style={{width: '100%'}}>

@@ -30,3 +30,7 @@ export const GetConversationId = async (data) =>{
         console.log(err.response.data.mgs)
     }
 }
+export const sendTextConversationId = (token,conversationId,text)=>{
+    console.log({token,conversationId,text})
+    
+}

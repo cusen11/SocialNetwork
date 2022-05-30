@@ -49,8 +49,7 @@ function MessageToID({token}) {
         const removeIndex = chatData.map(e => e.user.socketId === id).indexOf(id) 
         setChatData(chatData => chatData.splice(removeIndex, 0)); 
         
-    }
- 
+    } 
     return (
         <>
             <div className='box-chat-parent'>

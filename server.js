@@ -60,10 +60,9 @@ io.on('connection', (socket)=>{
         })
         
     }) 
-    socket.on('client-send-data',(data)=>{ 
-        
-        io.emit('server-send-data',data)  
-        io.in(data.dataUser._id).emit('server-send-data-room',data.dataText)
+    socket.on('client-send-data',(data)=>{  
+        // io.emit('server-send-data',data)   
+        io.in(data.dataUser._id).emit('server-send-data',data)
     })  
     
 
