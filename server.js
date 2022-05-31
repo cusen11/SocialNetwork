@@ -50,22 +50,17 @@ const removeUser = (data) => {
 io.on('connection', (socket)=>{  
     //setup user login
     socket.on('setup',(data)=>{ 
-        addUser(data,socket.id)
+        addUser(data,socket.id)  
         io.emit('getUser', users) 
         //disconnect user
         socket.on('disconnect' , ()=> {
             removeUser(data)
             io.emit('getUser', users)
-        })
-        
-        
-    }) 
-    io.in(socket.id).emit('connect-di', `bạn đã connect ${socket.id}`)
-
-    socket.on('client-send-data',(data)=>{  
-        const { user } = data.data   
-        socket.emit('server-send-user',data)
+        }) 
     })  
-    
-
+    socket.on('client-send-data',(data)=>{  
+        const { conversationId } = data
+        socket.join(conversationId)  
+        io.sockets.in(conversationId).emit('server-send-user',data)  
+    }) 
 }) 

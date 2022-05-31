@@ -19,7 +19,7 @@ function SingleChat({token,data, handleCloseMessage}) {
     const boxMessage = useRef()  
     const [form] = Form.useForm();
     const onFinish = () => {   
-        socket.emit('client-send-data',{data, dataText}) 
+        socket.emit('client-send-data',{data, dataText, conversationId}) 
         form.resetFields();
         
         const newMessages = { 
@@ -43,10 +43,15 @@ function SingleChat({token,data, handleCloseMessage}) {
         })
     }; 
     useEffect(()=>{ 
-            socket.on('server-send-user',(data)=>{
-                console.log(data)
-            })   
+           
+            socket.on('connect', async()=>{ 
+                socket.on('server-send-user',(data)=>{
+                    setClient(data)
+                    console.log(data)
+                })  
+            })    
     },[])
+    
     useEffect(()=>{   
         
         const GetConversationID = async() =>{

@@ -29,8 +29,10 @@ function MessageToID({token}) {
     },[])  
     useEffect(()=>{ 
         socket.on('getUser',data =>{
-            setUsers(data)
-            console.log(users)  
+            setUsers(data) 
+        }) 
+        socket.on('server-send-user',data =>{ 
+            console.log(data)  
         }) 
     },[users]) 
     const handleClickOnlineFriend = (user) =>{
