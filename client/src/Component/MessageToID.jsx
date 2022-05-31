@@ -26,13 +26,11 @@ function MessageToID({token}) {
             }  
         })  
         
-    },[]) 
-    
-    useEffect(()=>{
-        socket.on('connect', async()=>{ 
-            socket.on('getUser',data =>{
-                setUsers(data)  
-            })
+    },[])  
+    useEffect(()=>{ 
+        socket.on('getUser',data =>{
+            setUsers(data)
+            console.log(users)  
         }) 
     },[users]) 
     const handleClickOnlineFriend = (user) =>{
@@ -49,7 +47,8 @@ function MessageToID({token}) {
         const removeIndex = chatData.map(e => e.user.socketId === id).indexOf(id) 
         setChatData(chatData => chatData.splice(removeIndex, 0)); 
         
-    } 
+    }  
+    
     return (
         <>
             <div className='box-chat-parent'>

@@ -14,12 +14,12 @@ function SingleChat({token,data, handleCloseMessage}) {
     const [height, setHeight] = useState(true) 
     const [messages, setMessages] = useState()
     const [conversationId, setConversationId] = useState()
-    const [ client, setClient ] = useState() 
+    const [ client, setClient ] = useState()  
     const [dataText, setDataText] = useState('')
     const boxMessage = useRef()  
     const [form] = Form.useForm();
     const onFinish = () => {   
-        socket.emit('client-send-data',{dataUser, dataText}) 
+        socket.emit('client-send-data',{data, dataText}) 
         form.resetFields();
         
         const newMessages = { 
@@ -31,7 +31,7 @@ function SingleChat({token,data, handleCloseMessage}) {
                 avatar: dataUser.avatar
             } 
         }  
-        sendTextConversationId(token,conversationId,dataText) 
+        // sendTextConversationId(token,conversationId,dataText) 
         setMessages(messages => [...messages,newMessages])  
         setTimeout(()=>{
             boxMessage.current.scrollIntoView(
@@ -42,11 +42,13 @@ function SingleChat({token,data, handleCloseMessage}) {
                 })
         })
     }; 
-    useEffect(()=>{  
-        socket.on('server-send-data',(data)=>{
-            setClient(data)
-            console.log(client)
-        })  
+    useEffect(()=>{ 
+            socket.on('server-send-user',(data)=>{
+                console.log(data)
+            })   
+    },[])
+    useEffect(()=>{   
+        
         const GetConversationID = async() =>{
             const conversationResult = await GetConversationId(data.conversation) 
             if(conversationResult.length === 0){  
@@ -70,8 +72,7 @@ function SingleChat({token,data, handleCloseMessage}) {
                 })
         }
         getMassage() 
-    },[conversationId])  
-    console.log(data)
+    },[conversationId])   
     return (
         <Row className="chat-box">
             <Row className="name-box" justify='space-between' style={{width: '100%'}}>
