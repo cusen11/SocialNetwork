@@ -30,10 +30,9 @@ function MessageToID({token}) {
     useEffect(()=>{ 
         socket.on('getUser',data =>{
             setUsers(data) 
+            console.log(data)
         }) 
-        socket.on('server-send-user',data =>{ 
-            console.log(data)  
-        }) 
+        
     },[users]) 
     const handleClickOnlineFriend = (user) =>{
         const conversation = {
@@ -44,6 +43,7 @@ function MessageToID({token}) {
         const foundSocketId = chatData.some(e => e.user.socketId === user.socketId)
         if(!foundSocketId)
             setChatData(chatData => [...chatData,newChatData]) 
+        console.log(user)
     }
     const handleCloseMessage = (id) =>{
         const removeIndex = chatData.map(e => e.user.socketId === id).indexOf(id) 

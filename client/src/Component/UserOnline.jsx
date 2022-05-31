@@ -7,11 +7,9 @@ function UserOnline() {
     const socket = io(ENDPONT)
 
     const [users, setUsers] = useState()
-    useEffect(()=>{
-        socket.on('connect', async()=>{ 
-            socket.on('getUser',data =>{
-                setUsers(data)  
-            })
+    useEffect(()=>{ 
+        socket.on('getUser',data =>{
+            setUsers(data)  
         }) 
     },[users]) 
     const handleClickOnlineFriend = (user) =>{

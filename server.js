@@ -58,9 +58,9 @@ io.on('connection', (socket)=>{
             io.emit('getUser', users)
         }) 
     })  
+    console.log(`trang là` ,socket.id)
     socket.on('client-send-data',(data)=>{  
-        const { conversationId } = data
-        socket.join(conversationId)  
-        io.sockets.in(conversationId).emit('server-send-user',data)  
+        const { user } = data.data 
+        io.to(user.socketId).emit('server-send-user',data)  
     }) 
 }) 

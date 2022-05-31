@@ -15,11 +15,12 @@ function SingleChat({token,data, handleCloseMessage}) {
     const [messages, setMessages] = useState()
     const [conversationId, setConversationId] = useState()
     const [ client, setClient ] = useState()  
+    const [ room, setRoom ] = useState()
     const [dataText, setDataText] = useState('')
     const boxMessage = useRef()  
     const [form] = Form.useForm();
     const onFinish = () => {   
-        socket.emit('client-send-data',{data, dataText, conversationId}) 
+        socket.emit('client-send-data',{data, dataText}) 
         form.resetFields();
         
         const newMessages = { 
@@ -43,13 +44,15 @@ function SingleChat({token,data, handleCloseMessage}) {
         })
     }; 
     useEffect(()=>{ 
-           
-            socket.on('connect', async()=>{ 
-                socket.on('server-send-user',(data)=>{
-                    setClient(data)
-                    console.log(data)
-                })  
-            })    
+            
+            socket.on('server-send-user',(data)=>{
+                setClient(data)
+                console.log(data)
+            })  
+                 
+            socket.on('server-send-data-room',(data)=>{
+                setRoom(data)
+            })
     },[])
     
     useEffect(()=>{   
@@ -79,7 +82,7 @@ function SingleChat({token,data, handleCloseMessage}) {
         getMassage() 
     },[conversationId])   
     return (
-        <Row className="chat-box">
+        <Row className="chat-box"> 
             <Row className="name-box" justify='space-between' style={{width: '100%'}}>
                 <Col><Link to='/'>{data.user.data.username}</Link></Col> 
                 <Col style={{width: '50%', height:'100%'}} onClick={()=> setHeight(!height) } ></Col>
@@ -95,6 +98,7 @@ function SingleChat({token,data, handleCloseMessage}) {
                         <Message key={index} data={m} position={dataUser._id !== m.user._id ? true : false}/>
                     )}
                     <span ref={boxMessage}></span>
+                   
                 
                 </Col>
                 <Col md={24} xs={24} >
