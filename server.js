@@ -60,8 +60,7 @@ io.on('connection', (socket)=>{
         
     })   
     socket.on('client-send-data',(data)=>{  
-        const { user } = data.data 
+        const { user } = data.data   
         io.to(user.socketId).emit('server-send-user',data)  
-    })  
-    io.to(socket.id).emit('youconnected',socket.id) 
+    })   
 }) 

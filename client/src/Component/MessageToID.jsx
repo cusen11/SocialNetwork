@@ -8,7 +8,7 @@ function MessageToID({token}) {
     const tokenKey = token.value.request_token.token 
     const ENDPONT = 'http://localhost:5000/'
     const socket = io(ENDPONT) 
-    const [users, setUsers] = useState()
+    const [users, setUsers] = useState() 
     const [chatData, setChatData] = useState([])
     useEffect(()=>{
         socket.on('connect', async()=>{ 
@@ -23,16 +23,18 @@ function MessageToID({token}) {
                
             } catch (err) {
                 console.log(err.response.data.mgs)
-            }  
-            console.log(socket.id)
-        })  
-        socket.on('youconnected',data => console.log({data}))
+            }   
+        })   
     },[])  
     useEffect(()=>{ 
         socket.on('getUser',data =>{
-            setUsers(data) 
-            console.log(data)
+            setUsers(data)  
         }) 
+        
+        socket.on('server-send-user',(data)=>{ 
+            console.log(data)
+        })  
+             
         
     },[users]) 
     const handleClickOnlineFriend = (user) =>{
@@ -43,8 +45,7 @@ function MessageToID({token}) {
         const newChatData = {conversation, user}
         const foundSocketId = chatData.some(e => e.user.socketId === user.socketId)
         if(!foundSocketId)
-            setChatData(chatData => [...chatData,newChatData]) 
-        console.log(user)
+            setChatData(chatData => [...chatData,newChatData])  
     }
     const handleCloseMessage = (id) =>{
         const removeIndex = chatData.map(e => e.user.socketId === id).indexOf(id) 
@@ -54,14 +55,14 @@ function MessageToID({token}) {
     
     return (
         <>
-            {/* <div className='box-chat-parent'>
+            <div className='box-chat-parent'>
                 {
                     chatData.map((chat,index) => (
                         <SingleChat key={index} token={tokenKey} data={chat} handleCloseMessage={(id)=>handleCloseMessage(id)} /> 
                     ))
                 }
                
-            </div> */}
+            </div>
             <Row className="chat-box list-friend" justify='start'> 
                 <Col className="name-box">Online</Col> 
                 <Col className="online-friend">

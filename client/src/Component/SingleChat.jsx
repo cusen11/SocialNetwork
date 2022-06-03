@@ -13,14 +13,12 @@ function SingleChat({token,data, handleCloseMessage}) {
     const socket = io(ENDPONT)
     const [height, setHeight] = useState(true) 
     const [messages, setMessages] = useState()
-    const [conversationId, setConversationId] = useState()
-    const [ client, setClient ] = useState()  
-    const [ room, setRoom ] = useState()
+    const [conversationId, setConversationId] = useState() 
     const [dataText, setDataText] = useState('')
     const boxMessage = useRef()  
-    const [form] = Form.useForm();
+    const [form] = Form.useForm(); 
     const onFinish = () => {   
-        socket.emit('client-send-data',{data, dataText}) 
+        socket.emit('client-send-data',{data, dataText,dataUser}) 
         form.resetFields();
         
         const newMessages = { 
@@ -42,19 +40,7 @@ function SingleChat({token,data, handleCloseMessage}) {
                   inline: 'nearest'
                 })
         })
-    }; 
-    useEffect(()=>{ 
-            
-            socket.on('server-send-user',(data)=>{
-                setClient(data)
-                console.log(data)
-            })  
-                 
-            socket.on('server-send-data-room',(data)=>{
-                setRoom(data)
-            })
-    },[])
-    
+    };    
     useEffect(()=>{   
         
         const GetConversationID = async() =>{
