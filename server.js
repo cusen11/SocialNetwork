@@ -57,10 +57,11 @@ io.on('connection', (socket)=>{
             removeUser(data)
             io.emit('getUser', users)
         }) 
-    })  
-    console.log(`trang là` ,socket.id)
+        
+    })   
     socket.on('client-send-data',(data)=>{  
         const { user } = data.data 
         io.to(user.socketId).emit('server-send-user',data)  
-    }) 
+    })  
+    io.to(socket.id).emit('youconnected',socket.id) 
 }) 

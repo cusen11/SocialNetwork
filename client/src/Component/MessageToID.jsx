@@ -24,8 +24,9 @@ function MessageToID({token}) {
             } catch (err) {
                 console.log(err.response.data.mgs)
             }  
+            console.log(socket.id)
         })  
-        
+        socket.on('youconnected',data => console.log({data}))
     },[])  
     useEffect(()=>{ 
         socket.on('getUser',data =>{
@@ -53,14 +54,14 @@ function MessageToID({token}) {
     
     return (
         <>
-            <div className='box-chat-parent'>
+            {/* <div className='box-chat-parent'>
                 {
                     chatData.map((chat,index) => (
                         <SingleChat key={index} token={tokenKey} data={chat} handleCloseMessage={(id)=>handleCloseMessage(id)} /> 
                     ))
                 }
                
-            </div>
+            </div> */}
             <Row className="chat-box list-friend" justify='start'> 
                 <Col className="name-box">Online</Col> 
                 <Col className="online-friend">
