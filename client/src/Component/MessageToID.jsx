@@ -9,7 +9,8 @@ function MessageToID({token}) {
     const ENDPONT = 'http://localhost:5000/'
     const socket = io(ENDPONT) 
     const [users, setUsers] = useState() 
-    const [chatData, setChatData] = useState([])
+    const [chatData, setChatData] = useState([])  
+    const [messData, setMessData] = useState()  
     useEffect(()=>{
         socket.on('connect', async()=>{ 
             try {
@@ -31,12 +32,10 @@ function MessageToID({token}) {
             setUsers(data)  
         }) 
         
-        socket.on('server-send-user',(data)=>{ 
-            console.log(data)
-        })  
-             
-        
-    },[users]) 
+        socket.on('server-send-user',(data)=>{   
+            setMessData(data) 
+        })   
+    },[]) 
     const handleClickOnlineFriend = (user) =>{
         const conversation = {
             "senderId": token.info._id,
@@ -52,13 +51,12 @@ function MessageToID({token}) {
         setChatData(chatData => chatData.splice(removeIndex, 0)); 
         
     }  
-    
     return (
         <>
             <div className='box-chat-parent'>
                 {
                     chatData.map((chat,index) => (
-                        <SingleChat key={index} token={tokenKey} data={chat} handleCloseMessage={(id)=>handleCloseMessage(id)} /> 
+                        <SingleChat key={index} token={tokenKey} data={chat} messData={messData} handleCloseMessage={(id)=>handleCloseMessage(id)} /> 
                     ))
                 }
                

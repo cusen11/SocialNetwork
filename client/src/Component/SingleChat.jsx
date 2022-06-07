@@ -7,7 +7,7 @@ import { GetConversationId, GetMessageByConversationId, sendTextConversationId }
 import { Link } from 'react-router-dom'; 
 import { useSelector } from 'react-redux';
 
-function SingleChat({token,data, handleCloseMessage}) { 
+function SingleChat({token,data, handleCloseMessage,messData}) { 
     const dataUser = useSelector(state => state.login.info) 
     const ENDPONT = 'http://localhost:5000/'
     const socket = io(ENDPONT)
@@ -16,11 +16,10 @@ function SingleChat({token,data, handleCloseMessage}) {
     const [conversationId, setConversationId] = useState() 
     const [dataText, setDataText] = useState('')
     const boxMessage = useRef()  
-    const [form] = Form.useForm(); 
-    const onFinish = () => {   
-        socket.emit('client-send-data',{data, dataText,dataUser}) 
-        form.resetFields();
-        
+    const [form] = Form.useForm();  
+    const onFinish = () => {    
+        socket.emit('client-send-data',{data, dataText,dataUser})  
+        form.resetFields();  
         const newMessages = { 
             conversationId: conversationId,
             text: dataText,
@@ -40,7 +39,7 @@ function SingleChat({token,data, handleCloseMessage}) {
                   inline: 'nearest'
                 })
         })
-    };    
+    };     
     useEffect(()=>{   
         
         const GetConversationID = async() =>{
