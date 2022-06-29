@@ -7,7 +7,7 @@ import { GetConversationId, GetMessageByConversationId, sendTextConversationId }
 import { Link } from 'react-router-dom'; 
 import { useSelector } from 'react-redux';
 
-function SingleChat({token,data, handleCloseMessage,messData}) { 
+function SingleChat({token,data, handleCloseMessage,assignMessage}) { 
     const dataUser = useSelector(state => state.login.info) 
     const ENDPONT = 'http://localhost:5000/'
     const socket = io(ENDPONT)
@@ -18,7 +18,7 @@ function SingleChat({token,data, handleCloseMessage,messData}) {
     const boxMessage = useRef()  
     const [form] = Form.useForm();  
     const onFinish = () => {    
-        socket.emit('client-send-data',{data, dataText,dataUser})  
+        socket.emit('client-send-data',{data, dataText,dataUser}) 
         form.resetFields();  
         const newMessages = { 
             conversationId: conversationId,
@@ -28,8 +28,7 @@ function SingleChat({token,data, handleCloseMessage,messData}) {
                 username: dataUser.username,
                 avatar: dataUser.avatar
             } 
-        }  
-        // sendTextConversationId(token,conversationId,dataText) 
+        }   
         setMessages(messages => [...messages,newMessages])  
         setTimeout(()=>{
             boxMessage.current.scrollIntoView(
@@ -39,7 +38,9 @@ function SingleChat({token,data, handleCloseMessage,messData}) {
                   inline: 'nearest'
                 })
         })
-    };     
+        const idUser = data.user.data._id
+        assignMessage(idUser, messages)
+    };      
     useEffect(()=>{   
         
         const GetConversationID = async() =>{
@@ -55,8 +56,8 @@ function SingleChat({token,data, handleCloseMessage,messData}) {
     useEffect(()=>{
         const getMassage = async()=>{ 
             const newMessage = await GetMessageByConversationId(token,conversationId)
-            setMessages(newMessage)
-            
+            setMessages(newMessage) 
+
             boxMessage.current.scrollIntoView(
                 {
                   behavior: 'smooth',

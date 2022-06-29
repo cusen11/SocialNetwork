@@ -9,8 +9,7 @@ function MessageToID({token}) {
     const ENDPONT = 'http://localhost:5000/'
     const socket = io(ENDPONT) 
     const [users, setUsers] = useState() 
-    const [chatData, setChatData] = useState([])  
-    const [messData, setMessData] = useState()  
+    const [chatData, setChatData] = useState([])   
     useEffect(()=>{
         socket.on('connect', async()=>{ 
             try {
@@ -33,9 +32,22 @@ function MessageToID({token}) {
         }) 
         
         socket.on('server-send-user',(data)=>{   
-            setMessData(data) 
-        })   
+            console.log(data)
+        })
+        
     },[]) 
+    useEffect(()=>{
+        if(users===undefined){
+            return
+        }else{
+            const _id = '623ada1ac390cedaeb57663a' 
+            const trang = users.find(x=> x.data._id === _id)
+            
+            Object.assign(trang, {message:'vài tin nhắn 123123', status:true}) 
+            console.log(users)
+        }
+        
+    },[users])
     const handleClickOnlineFriend = (user) =>{
         const conversation = {
             "senderId": token.info._id,
@@ -50,13 +62,20 @@ function MessageToID({token}) {
         const removeIndex = chatData.map(e => e.user.socketId === id).indexOf(id) 
         setChatData(chatData => chatData.splice(removeIndex, 0)); 
         
-    }  
+    } 
+    const assignMessage = (id,message) => {
+        console.log(id,message)
+    } 
     return (
         <>
             <div className='box-chat-parent'>
                 {
                     chatData.map((chat,index) => (
-                        <SingleChat key={index} token={tokenKey} data={chat} messData={messData} handleCloseMessage={(id)=>handleCloseMessage(id)} /> 
+                        <SingleChat key={index} 
+                        token={tokenKey} 
+                        data={chat}  
+                        assignMessage={(id,message)=>assignMessage(id,message)} 
+                        handleCloseMessage={(id)=>handleCloseMessage(id)} /> 
                     ))
                 }
                
