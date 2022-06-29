@@ -35,19 +35,8 @@ function MessageToID({token}) {
             console.log(data)
         })
         
-    },[]) 
-    useEffect(()=>{
-        if(users===undefined){
-            return
-        }else{
-            const _id = '623ada1ac390cedaeb57663a' 
-            const trang = users.find(x=> x.data._id === _id)
-            
-            Object.assign(trang, {message:'vài tin nhắn 123123', status:true}) 
-            console.log(users)
-        }
-        
-    },[users])
+    },[])  
+    
     const handleClickOnlineFriend = (user) =>{
         const conversation = {
             "senderId": token.info._id,
@@ -58,13 +47,21 @@ function MessageToID({token}) {
         if(!foundSocketId)
             setChatData(chatData => [...chatData,newChatData])  
     }
+    
     const handleCloseMessage = (id) =>{
         const removeIndex = chatData.map(e => e.user.socketId === id).indexOf(id) 
         setChatData(chatData => chatData.splice(removeIndex, 0)); 
         
     } 
-    const assignMessage = (id,message) => {
-        console.log(id,message)
+
+    const assignMessage = (id,messages) => { 
+        if(users===undefined){
+            return
+        }else{  
+            const userResult = users.find(x=> x.data._id === id)
+            
+            Object.assign(userResult, {messages})  
+        }
     } 
     return (
         <>
@@ -74,8 +71,9 @@ function MessageToID({token}) {
                         <SingleChat key={index} 
                         token={tokenKey} 
                         data={chat}  
-                        assignMessage={(id,message)=>assignMessage(id,message)} 
-                        handleCloseMessage={(id)=>handleCloseMessage(id)} /> 
+                        assignMessage={(id,messages)=>assignMessage(id,messages)} 
+                        handleCloseMessage={(id)=>handleCloseMessage(id)}
+                        messages={users} /> 
                     ))
                 }
                
