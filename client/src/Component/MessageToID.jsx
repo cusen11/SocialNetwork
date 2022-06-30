@@ -10,6 +10,7 @@ function MessageToID({token}) {
     const socket = io(ENDPONT) 
     const [users, setUsers] = useState() 
     const [chatData, setChatData] = useState([])   
+    const [messageData, setMessageData] = useState()
     useEffect(()=>{
         socket.on('connect', async()=>{ 
             try {
@@ -32,11 +33,32 @@ function MessageToID({token}) {
         }) 
         
         socket.on('server-send-user',(data)=>{   
+            setMessageData(data)
             console.log(data)
+            
         })
         
     },[])  
+    useEffect(()=>{ 
+        if(messageData !== undefined){
+            const newMessage = {
+                text: messageData.dataText,
+                createdAt: Date.now,
+                user:{
+                    avatar: messageData.dataUser.avatar,
+                    username: messageData.dataUser.username,
+                    _id: messageData.dataUser._id
+                },
     
+            } 
+            const temp = [...users] 
+            const userResult = temp.find(x=> x.data._id === messageData.dataUser._id) 
+            const messages = userResult.messages
+            messages.push(newMessage)  
+            setUsers(temp)
+            console.log(temp)
+        } 
+    },[messageData])
     const handleClickOnlineFriend = (user) =>{
         const conversation = {
             "senderId": token.info._id,
@@ -60,7 +82,7 @@ function MessageToID({token}) {
         }else{  
             const userResult = users.find(x=> x.data._id === id)
             
-            Object.assign(userResult, {messages})  
+            Object.assign(userResult, {messages})   
         }
     } 
     return (

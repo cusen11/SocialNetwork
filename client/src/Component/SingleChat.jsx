@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Row } from 'antd';
+import { Button, Col, Form, Input, Row, Spin } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import Message from './Message';
 import io from 'socket.io-client'; 
@@ -13,38 +13,38 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) {
     const socket = io(ENDPONT)
     const [height, setHeight] = useState(true)  
     const [conversationId, setConversationId] = useState() 
-    const [chatMessage, setChatMessage] = useState()
+    const [chatMessage, setChatMessage] = useState() 
     const [dataText, setDataText] = useState('')
     const boxMessage = useRef()  
     const [form] = Form.useForm();  
     const onFinish = () => {    
         socket.emit('client-send-data',{data, dataText,dataUser}) 
         form.resetFields();  
-        // const newMessages = { 
-        //     conversationId: conversationId,
-        //     text: dataText,
-        //     user: {
-        //         _id: dataUser._id,
-        //         username: dataUser.username,
-        //         avatar: dataUser.avatar
-        //     } 
-        // }   
-        // setMessages(messages => [...messages,newMessages])  
-        // setTimeout(()=>{
-        //     boxMessage.current.scrollIntoView(
-        //         {
-        //           behavior: 'smooth',
-        //           block: 'end',
-        //           inline: 'nearest'
-        //         })
-        // }) 
-    };       
-    useEffect(()=>{
-        const _messages = messages.find(x=> x.socketId === data.user.socketId)
+        const newMessages = { 
+            conversationId: conversationId,
+            text: dataText,
+            user: {
+                _id: dataUser._id,
+                username: dataUser.username,
+                avatar: dataUser.avatar
+            } 
+        }   
+        setChatMessage(chatMessage => [...chatMessage,newMessages])  
         setTimeout(()=>{
+            boxMessage.current.scrollIntoView(
+                {
+                  behavior: 'smooth',
+                  block: 'end',
+                  inline: 'nearest'
+                })
+        }) 
+    };       
+    useEffect(()=>{  
+        setTimeout(()=>{
+            const _messages = messages.find(x=> x.socketId === data.user.socketId) 
             setChatMessage(_messages.messages)
-        },1000)
-    },[messages,chatMessage])
+        },1500)
+    },[messages])
     useEffect(()=>{   
         
         const GetConversationID = async() =>{
@@ -62,12 +62,12 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) {
             const newMessage = await GetMessageByConversationId(token,conversationId) 
             const idUser = data.user.data._id
             assignMessage(idUser, newMessage)
-            // boxMessage.current.scrollIntoView(
-            //     {
-            //       behavior: 'smooth',
-            //       block: 'end',
-            //       inline: 'nearest'
-            //     })
+            boxMessage.current.scrollIntoView(
+                {
+                  behavior: 'smooth',
+                  block: 'end',
+                  inline: 'nearest'
+                })
         }
         getMassage() 
     },[conversationId])   
@@ -81,14 +81,19 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) {
                 </Col>
             </Row>
             
-            <Row  justify='start' wrap='wrap' style={{height: height ? '360px' : '0' }}>
+            <Row  justify='start' wrap='wrap' style={{height: height ? '360px' : '0', width:"100%" }}>
                 <Col md={24} xs={24} className="box-massage">
                     
                     {chatMessage?.map((m,index) =>
                         <Message key={index} data={m} position={dataUser._id !== m.user._id ? true : false}/>
+                        
                     )}
-                    <span ref={boxMessage}></span>
-                   
+                    <span ref={boxMessage}>
+                        {chatMessage === undefined ? <Spin 
+                            style={{position: "absolute",top: "10%",left: "50%",transform: "translate(-50%)"}} tip="Loading..."/> : ''}
+                    </span>
+                    
+                    
                 
                 </Col>
                 <Col md={24} xs={24} >
