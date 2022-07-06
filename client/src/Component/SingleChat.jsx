@@ -17,6 +17,7 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) {
     const [dataText, setDataText] = useState('')
     const boxMessage = useRef()  
     const [form] = Form.useForm();  
+    const textInput = useRef(null);
     const onFinish = () => {    
         socket.emit('client-send-data',{data, dataText,dataUser}) 
         form.resetFields();  
@@ -39,26 +40,19 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) {
                   inline: 'nearest'
                 })
         })  
+        textInput.current.focus();
+        sendTextConversationId(token,conversationId,dataText)
     };   
     useEffect(()=>{
         const idUser = data.user.data._id
-        assignMessage(idUser, chatMessage)
-        
-       
+        assignMessage(idUser, chatMessage)   
     },[chatMessage])    
     useEffect(()=>{  
         setTimeout(()=>{
             const _messages = messages.find(x=> x.socketId === data.user.socketId) 
             setChatMessage(_messages.messages)
         },1500)
-        setTimeout(()=>{
-            boxMessage.current.scrollIntoView(
-                {
-                  behavior: 'smooth',
-                  block: 'end',
-                  inline: 'nearest'
-                })  
-           })
+        
     },[messages])
     useEffect(()=>{   
         
@@ -77,12 +71,14 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) {
             const newMessage = await GetMessageByConversationId(token,conversationId) 
             const idUser = data.user.data._id
             assignMessage(idUser, newMessage)
-            boxMessage.current.scrollIntoView(
-                {
-                  behavior: 'smooth',
-                  block: 'end',
-                  inline: 'nearest'
-                })
+            setTimeout(()=>{
+                boxMessage.current.scrollIntoView(
+                    {
+                      behavior: 'smooth',
+                      block: 'end',
+                      inline: 'nearest'
+                    })  
+            },1000)
         } 
         getMassage() 
     },[conversationId])   
@@ -119,7 +115,7 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) {
                         onFinish={onFinish} 
                     >
                         <Form.Item name='text' style={{width:'100%'}}>
-                            <Input className='input-message' placeholder='Tâm sự mỏng tại đây...' onChange={(e)=> setDataText(e.target.value)} />
+                            <Input ref={textInput} className='input-message' placeholder='Tâm sự mỏng tại đây...' onChange={(e)=> setDataText(e.target.value)} />
                         </Form.Item>
                         
                     </Form> 

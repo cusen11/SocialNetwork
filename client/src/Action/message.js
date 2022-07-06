@@ -30,7 +30,23 @@ export const GetConversationId = async (data) =>{
         console.log(err.response.data.mgs)
     }
 }
-export const sendTextConversationId = (token,conversationId,text)=>{
-    console.log({token,conversationId,text})
-    
+export const sendTextConversationId = async (token,conversationId,text)=>{
+    const data = {
+        conversationId,
+        text
+    }
+
+    try {
+        const config = {
+            headers:{
+                'x-auth-token': token,
+                'Content-Type': 'application/json'
+            }
+        } 
+        const res = await axios.post('/api/message',data,config)  
+        console.log(res)
+       
+    } catch (err) {
+        console.log(err.response.data.mgs)
+    }
 }
