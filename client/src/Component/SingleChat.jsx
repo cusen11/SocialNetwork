@@ -50,7 +50,7 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) {
     useEffect(()=>{  
         setTimeout(()=>{
             const _messages = messages.find(x=> x.socketId === data.user.socketId) 
-            setChatMessage(_messages.messages)
+            setChatMessage(_messages?.messages)
         },1500)
         
     },[messages])
