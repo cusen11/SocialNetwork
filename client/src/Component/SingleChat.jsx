@@ -29,7 +29,8 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) {
                 avatar: dataUser.avatar
             } 
         }   
-        setChatMessage(chatMessage => [...chatMessage,newMessages])  
+         
+        setChatMessage(chatMessage => [...chatMessage,newMessages]) 
         setTimeout(()=>{
             boxMessage.current.scrollIntoView(
                 {
@@ -37,8 +38,20 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) {
                   block: 'end',
                   inline: 'nearest'
                 })
-        }) 
-    };       
+        })  
+    };   
+    useEffect(()=>{
+        const idUser = data.user.data._id
+        assignMessage(idUser, chatMessage) 
+        setTimeout(()=>{
+            boxMessage.current.scrollIntoView(
+                {
+                  behavior: 'smooth',
+                  block: 'end',
+                  inline: 'nearest'
+                })
+        },1000) 
+    },[chatMessage])    
     useEffect(()=>{  
         setTimeout(()=>{
             const _messages = messages.find(x=> x.socketId === data.user.socketId) 
@@ -68,7 +81,7 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) {
                   block: 'end',
                   inline: 'nearest'
                 })
-        }
+        } 
         getMassage() 
     },[conversationId])   
     return (
