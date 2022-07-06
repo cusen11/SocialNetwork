@@ -33,8 +33,7 @@ function MessageToID({token}) {
         }) 
         
         socket.on('server-send-user',(data)=>{   
-            setMessageData(data)
-            console.log(data)
+            setMessageData(data) 
             
         })
         
@@ -55,8 +54,7 @@ function MessageToID({token}) {
             const userResult = temp.find(x=> x.data._id === messageData.dataUser._id) 
             const messages = userResult.messages
             messages.push(newMessage)  
-            setUsers(temp)
-            console.log(temp)
+            setUsers(temp) 
         } 
     },[messageData])
     const handleClickOnlineFriend = (user) =>{

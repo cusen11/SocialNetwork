@@ -42,21 +42,23 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) {
     };   
     useEffect(()=>{
         const idUser = data.user.data._id
-        assignMessage(idUser, chatMessage) 
-        setTimeout(()=>{
-            boxMessage.current.scrollIntoView(
-                {
-                  behavior: 'smooth',
-                  block: 'end',
-                  inline: 'nearest'
-                })
-        },1000) 
+        assignMessage(idUser, chatMessage)
+        
+       
     },[chatMessage])    
     useEffect(()=>{  
         setTimeout(()=>{
             const _messages = messages.find(x=> x.socketId === data.user.socketId) 
             setChatMessage(_messages.messages)
         },1500)
+        setTimeout(()=>{
+            boxMessage.current.scrollIntoView(
+                {
+                  behavior: 'smooth',
+                  block: 'end',
+                  inline: 'nearest'
+                })  
+           })
     },[messages])
     useEffect(()=>{   
         
