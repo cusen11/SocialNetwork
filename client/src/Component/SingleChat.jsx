@@ -55,7 +55,7 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) {
                   block: 'end',
                   inline: 'nearest'
                 })  
-        },1000)   
+        })   
     },[messages])
     useEffect(()=>{   
         
