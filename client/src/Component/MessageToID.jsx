@@ -11,6 +11,7 @@ function MessageToID({token}) {
     const [users, setUsers] = useState() 
     const [chatData, setChatData] = useState([])   
     const [messageData, setMessageData] = useState()
+    const [newText, setNewText] = useState(true)
     useEffect(()=>{
         socket.on('connect', async()=>{ 
             try {
@@ -34,7 +35,7 @@ function MessageToID({token}) {
         
         socket.on('server-send-user',(data)=>{   
             setMessageData(data) 
-            
+            setNewText(!newText)            
         })
         
     },[])  
@@ -53,7 +54,11 @@ function MessageToID({token}) {
             const temp = [...users] 
             const userResult = temp.find(x=> x.data._id === messageData.dataUser._id) 
             const messages = userResult.messages
-            messages.push(newMessage)  
+            if(messages !== undefined){
+                messages.push(newMessage)
+            } else{
+                console.log('đưa vào thông báo')
+            }
             setUsers(temp) 
         } 
     },[messageData])
@@ -93,7 +98,8 @@ function MessageToID({token}) {
                         data={chat}  
                         assignMessage={(id,messages)=>assignMessage(id,messages)} 
                         handleCloseMessage={(id)=>handleCloseMessage(id)}
-                        messages={users} /> 
+                        messages={users}
+                        refresh={newText} /> 
                     ))
                 }
                

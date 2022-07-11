@@ -7,7 +7,7 @@ import { GetConversationId, GetMessageByConversationId, sendTextConversationId }
 import { Link } from 'react-router-dom'; 
 import { useSelector } from 'react-redux';
 
-function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) { 
+function SingleChat({token,data, messages, handleCloseMessage,assignMessage,refresh}) { 
     const dataUser = useSelector(state => state.login.info) 
     const ENDPONT = 'http://localhost:5000/'
     const socket = io(ENDPONT)
@@ -42,11 +42,7 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) {
         })  
         textInput.current.focus();
         sendTextConversationId(token,conversationId,dataText)
-    };   
-    useEffect(()=>{
-        const idUser = data.user.data._id
-        assignMessage(idUser, chatMessage)   
-    },[chatMessage])    
+    };    
     useEffect(()=>{  
         setTimeout(()=>{
             const _messages = messages.find(x=> x.socketId === data.user.socketId) 
@@ -78,10 +74,24 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) {
                       block: 'end',
                       inline: 'nearest'
                     })  
-            },1000)
+            },1500) 
         } 
         getMassage() 
-    },[conversationId])   
+    },[conversationId])
+    useEffect(()=>{
+        const idUser = data.user.data._id
+        assignMessage(idUser, chatMessage)  
+    },[chatMessage])  
+    useEffect(()=>{
+        setTimeout(()=>{
+            boxMessage.current.scrollIntoView(
+                {
+                  behavior: 'smooth',
+                  block: 'end',
+                  inline: 'nearest'
+                })  
+        },1000)   
+    },[refresh])      
     return (
         <Row className="chat-box"> 
             <Row className="name-box" justify='space-between' style={{width: '100%'}}>
