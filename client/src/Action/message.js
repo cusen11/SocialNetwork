@@ -43,7 +43,7 @@ export const sendTextConversationId = async (token,conversationId,text)=>{
                 'Content-Type': 'application/json'
             }
         } 
-        await axios.post('/api/message',data,config)   
+        const res = await axios.post('/api/message',data,config)   
        
     } catch (err) {
         console.log(err.response.data.mgs)

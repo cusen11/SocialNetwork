@@ -10,8 +10,7 @@ function MessageToID({token}) {
     const socket = io(ENDPONT) 
     const [users, setUsers] = useState() 
     const [chatData, setChatData] = useState([])   
-    const [messageData, setMessageData] = useState()
-    const [newText, setNewText] = useState(true)
+    const [messageData, setMessageData] = useState() 
     useEffect(()=>{
         socket.on('connect', async()=>{ 
             try {
@@ -34,8 +33,7 @@ function MessageToID({token}) {
         }) 
         
         socket.on('server-send-user',(data)=>{   
-            setMessageData(data) 
-            setNewText(!newText)            
+            setMessageData(data)              
         })
         
     },[])  
@@ -98,8 +96,7 @@ function MessageToID({token}) {
                         data={chat}  
                         assignMessage={(id,messages)=>assignMessage(id,messages)} 
                         handleCloseMessage={(id)=>handleCloseMessage(id)}
-                        messages={users}
-                        refresh={newText} /> 
+                        messages={users}  /> 
                     ))
                 }
                

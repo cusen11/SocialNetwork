@@ -18,6 +18,11 @@ li{
 .header-page{
     background-color: #ccc;
     padding:5px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10000;
     
 }
 .header-page img.avata{
@@ -29,7 +34,7 @@ li{
 }
 .wrapperInner{
     max-width: 800px;
-    margin: 50px auto;
+    margin: 100px auto 50px auto;
 }
 
 .post{

@@ -7,7 +7,7 @@ import { GetConversationId, GetMessageByConversationId, sendTextConversationId }
 import { Link } from 'react-router-dom'; 
 import { useSelector } from 'react-redux';
 
-function SingleChat({token,data, messages, handleCloseMessage,assignMessage,refresh}) { 
+function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) { 
     const dataUser = useSelector(state => state.login.info) 
     const ENDPONT = 'http://localhost:5000/'
     const socket = io(ENDPONT)
@@ -48,7 +48,14 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage,refr
             const _messages = messages.find(x=> x.socketId === data.user.socketId) 
             setChatMessage(_messages?.messages)
         },1500)
-        
+        setTimeout(()=>{
+            boxMessage.current.scrollIntoView(
+                {
+                  behavior: 'smooth',
+                  block: 'end',
+                  inline: 'nearest'
+                })  
+        },1000)   
     },[messages])
     useEffect(()=>{   
         
@@ -81,17 +88,7 @@ function SingleChat({token,data, messages, handleCloseMessage,assignMessage,refr
     useEffect(()=>{
         const idUser = data.user.data._id
         assignMessage(idUser, chatMessage)  
-    },[chatMessage])  
-    useEffect(()=>{
-        setTimeout(()=>{
-            boxMessage.current.scrollIntoView(
-                {
-                  behavior: 'smooth',
-                  block: 'end',
-                  inline: 'nearest'
-                })  
-        },1000)   
-    },[refresh])      
+    },[chatMessage])       
     return (
         <Row className="chat-box"> 
             <Row className="name-box" justify='space-between' style={{width: '100%'}}>
