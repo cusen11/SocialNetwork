@@ -1,14 +1,14 @@
-import { Avatar, Button, Col, Popover, Row, Tooltip } from 'antd';
+import { Avatar, Badge, Button, Col, Popover, Row, Tooltip } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../Assets/Images/SEN-LOGO.png';
 import { logout } from '../reducers/Login';
 import { useDispatch } from 'react-redux';
-import { CaretDownOutlined, PoweroffOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, MessageOutlined, NotificationOutlined, PoweroffOutlined } from '@ant-design/icons';
 
 function Navbar({data}) { 
     const dispatch = useDispatch();  
-    const content =(
+    const user =(
        <> 
         <Row gutter={[16, 16]}>
             <Col xs={24} md={24}><Link to='/profile'>Hồ sơ</Link></Col>
@@ -25,6 +25,18 @@ function Navbar({data}) {
         
         </> 
     )
+    const message =(
+        <> 
+         <h1>đây là message</h1>
+         
+         </> 
+     )
+     const notification =(
+        <> 
+         <h1>đây là thông báo</h1>
+         
+         </> 
+     )
     return (
         <Row className='header-page'>
             <Col className='wrapper' md={24} xs={24}>
@@ -38,12 +50,27 @@ function Navbar({data}) {
                                 {
                                     data.value.status ? 
                                    
-                                        <Row justify='center' align='middle' className='avatar' gutter={5}>  
+                                        <Row justify='center' align='middle' className='avatar' gutter={10}>  
+                                                <Col>
+                                                    <Popover content={notification} placement="topRight" arrowPointAtCenter trigger="click">
+                                                        <Badge count={5}>
+                                                            <NotificationOutlined style={{fontSize: '24px'}} />
+                                                        </Badge>
+                                                    </Popover> 
+                                                </Col>
+                                                <Col>
+                                                    <Popover content={message} placement="topRight" arrowPointAtCenter trigger="click">
+                                                        <Badge count={3}>
+                                                            <MessageOutlined style={{fontSize: '24px'}} />
+                                                        </Badge>
+                                                    </Popover> 
+                                                </Col>
+                                                
                                                 <Col>
                                                     <Link to='/profile'><Avatar  size={35} src={data.info.avatar}/></Link>
                                                 </Col>
                                                 <Col>
-                                                    <Popover content={content} title={`Chào ${data.info.username} !!!`} placement="topRight" arrowPointAtCenter trigger="hover">
+                                                    <Popover content={user} title={`Chào ${data.info.username} !!!`} placement="topRight" arrowPointAtCenter trigger="click">
                                                         <CaretDownOutlined style={{fontSize: '18px'}} />
                                                     </Popover> 
                                                 </Col> 
