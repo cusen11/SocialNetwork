@@ -36,7 +36,7 @@ const server = app.listen(PORT, ()=> console.log(`Server start on PORT ${PORT}`)
 const io = require('socket.io')(server,{
     pingTimeout: 60000,
     cors:{
-        origin: 'https://senbook.herokuapp.com/' 
+        origin: '*' 
     }
 })
 let users =[]

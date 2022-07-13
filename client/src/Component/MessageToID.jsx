@@ -6,7 +6,7 @@ import { Col, Row } from 'antd';
 
 function MessageToID({token}) { 
     const tokenKey = token.value.request_token.token 
-    const ENDPONT = 'https://senbook.herokuapp.com/'
+    const ENDPONT = '/'
     const socket = io(ENDPONT) 
     const [users, setUsers] = useState() 
     const [chatData, setChatData] = useState([])   
