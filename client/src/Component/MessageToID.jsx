@@ -54,9 +54,7 @@ function MessageToID({token}) {
             const messages = userResult.messages
             if(messages !== undefined){
                 messages.push(newMessage)
-            } else{
-                console.log('đưa vào thông báo')
-            }
+            } 
             setUsers(temp) 
         } 
     },[messageData])
