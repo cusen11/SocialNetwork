@@ -30,7 +30,7 @@ if(process.env.NODE_ENV === 'production'){
     })
 }
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 7309;
 const server = app.listen(PORT, ()=> console.log(`Server start on PORT ${PORT}`))
 
 const io = require('socket.io')(server,{
