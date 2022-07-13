@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 
 function SingleChat({token,data, messages, handleCloseMessage,assignMessage}) { 
     const dataUser = useSelector(state => state.login.info) 
-    const ENDPONT = '/'
+    const ENDPONT = 'http://localhost:5000/'
     const socket = io(ENDPONT)
     const [height, setHeight] = useState(true)  
     const [conversationId, setConversationId] = useState() 

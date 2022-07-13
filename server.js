@@ -30,13 +30,13 @@ if(process.env.NODE_ENV === 'production'){
     })
 }
 
-const PORT = process.env.PORT || 7309;
+const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, ()=> console.log(`Server start on PORT ${PORT}`))
 
 const io = require('socket.io')(server,{
     pingTimeout: 60000,
     cors:{
-        origin: '*' 
+        origin: 'http://localhost:3000' 
     }
 })
 let users =[]
@@ -57,10 +57,9 @@ io.on('connection', (socket)=>{
             removeUser(data)
             io.emit('getUser', users)
         }) 
-        
     })   
     socket.on('client-send-data',(data)=>{  
-        const { user } = data.data   
+        const { user } = data.data 
         io.to(user.socketId).emit('server-send-user',data)  
-    })   
-})  
+    }) 
+}) 

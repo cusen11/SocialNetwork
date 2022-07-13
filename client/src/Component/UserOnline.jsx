@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 
 function UserOnline() {
-    const ENDPONT = '/'
+    const ENDPONT = 'http://localhost:5000/'
     const socket = io(ENDPONT)
 
     const [users, setUsers] = useState()
